@@ -1,4 +1,5 @@
 1) BU.Roomie4.Me
+
    Provides BU students an effective way to discover and connect with potential roommates. It will contain the following features:
  - Google OAuth login into the site only allowing students with a @bu.edu email to proceed
  - Ability to open a roommate request; this “request” is filed by filling a form
