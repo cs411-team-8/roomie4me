@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "node scr/app.js",
+    "start": "node src/app.js",
     "app": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
