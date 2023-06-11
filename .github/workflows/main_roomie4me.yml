@@ -25,7 +25,6 @@ jobs:
         #npm run test --if-present
         run: |
           npm install
-          npm run start
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
