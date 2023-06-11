@@ -1,8 +1,8 @@
 {
-  "name": "cs411_group8",
+  "name": "roomie4me",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "directories": {
     "doc": "docs"
   },
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/munirsidd/cs411_group8.git"
+    "url": "git+https://github.com/cs411-team-8/roomie4me"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/munirsidd/cs411_group8/issues"
+    "url": "https://github.com/cs411-team-8/roomie4me/issues"
   },
-  "homepage": "https://github.com/munirsidd/cs411_group8#readme"
+  "homepage": "https://bu.roomie4.me"
 }
