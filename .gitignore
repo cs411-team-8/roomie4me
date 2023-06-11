@@ -1,3 +1,4 @@
 /.idea
 # database creds stored here
 code/backend/config.yml
+/node_modules
