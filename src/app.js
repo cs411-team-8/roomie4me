@@ -19,8 +19,7 @@ conn.once('open', () => {
 })
 
 app.get("/", (req, res) => {
-    res.send("Hello world!")
-    res.send("Database Status: " + status)
+    res.send("Hello world!\n\nDatabase Status: " + status)
 });
 
 const port = process.env.PORT || 8082;
