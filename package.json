@@ -7,6 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
+    "start": "node scr/app.js",
+    "app": "nodemon src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,9 +23,15 @@
   },
   "homepage": "https://bu.roomie4.me",
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "config": "^3.3.9",
     "cors": "^2.8.5",
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
-    "mongodb": "^5.6.0"
+    "mongodb": "^5.6.0",
+    "mongoose": "^7.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
