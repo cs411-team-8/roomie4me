@@ -1,7 +1,10 @@
-var http = require('http');
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "../roomie4me/src/App";
 
-
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end('Hello World!\nDB Status: ' + status);
-}).listen(8080);
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
