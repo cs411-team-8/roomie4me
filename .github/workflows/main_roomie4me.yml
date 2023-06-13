@@ -24,6 +24,7 @@ jobs:
       - name: npm install, build, and test
         #npm run test --if-present
         run: |
+          cd backend
           npm install
 
       - name: Upload artifact for deployment job
