@@ -16,9 +16,17 @@ conn.once("open", () => {
   status = true
 });
 
+
+// set json parser
+app.use(express.json())
+// job when people send requests
+app.use((req, res, next) => {
+  console.log('Received a ' + req.method + ' request at ' + req.path)
+  next()
+})
 // configure routing for the rest api
 app.use("/api/v1", restApi)
-
+// default page
 app.get("/", (req, res) => {
   res.send("Hello world!\n\nDatabase Status: " + status);
 });
