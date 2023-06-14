@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 app.use("/api/v1", restApi)
 // default page
 app.get("/", (req, res) => {
-  res.send("Hello world!\n\nDatabase Status: " + status);
+  res.send("Hello world!\n\nIs Database Connected: " + status);
 });
 
 const port = process.env.PORT || 8082;
