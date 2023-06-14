@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const User = require('../../models/userModel')
 
 router.get('/find', (res, req) => {
     let id = req.query.id

@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const RoomieRequest = require('../../models/roomieRequestModel')
 
 router.get('/requests', (req, res) => {
     let page = req.query["page-number"]

@@ -26,6 +26,8 @@ jobs:
         run: |
           cd backend
           npm install
+          cd ../frontend
+          npm install
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
