@@ -30,13 +30,15 @@ function HomeLogin() {
           </p>
         </div>
         <div className="col d-inline-flex d-md-flex justify-content-md-center align-items-md-center">
-          <picture>
-            <img
-              src="assets/img/btn_google_signin_dark_normal_web@2x.png"
-              style={{ marginTop: "15px" }}
-              alt="google login"
-            />
-          </picture>
+          <a href="https://bu.roomie4.me/oauth/url">
+            <picture>
+              <img
+                src="assets/img/btn_google_signin_dark_normal_web@2x.png"
+                style={{ marginTop: "15px" }}
+                alt="google login"
+              />
+            </picture>
+          </a>
         </div>
       </div>
     </div>
