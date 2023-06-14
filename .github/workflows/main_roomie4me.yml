@@ -21,6 +21,14 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: npm install, build, and test
+        #no need to waste space with these files that aren't needed to actually run the app
+        run: |
+          rm -rf docs
+          rm -rf .github
+          rm .gitignore
+          rm .prettierrc
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
