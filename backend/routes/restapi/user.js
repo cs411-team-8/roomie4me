@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../../models/userModel')
+const Encryptor = require('../../utils/encryptor')
 const oAuthController = require("../../controller/oauthController");
 
+//todo: figure out a way to authenticate user for api
 router.get('/myinfo', (req, res) => {
     let token = req.cookies['gl-access-token']
     let openid = req.cookies['gl-openid']
@@ -10,6 +12,8 @@ router.get('/myinfo', (req, res) => {
         res.redirect('/oauth/url')
     }
     else {
+        token = Encryptor.decrypt(token)
+        openid = Encryptor.decrypt(openid)
         oAuthController.getUser({access_token: token, id_token: openid})
             .then(user => {
                 res.json(user)
