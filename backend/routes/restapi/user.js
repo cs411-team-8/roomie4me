@@ -1,6 +1,24 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../../models/userModel')
+const oAuthController = require("../../controller/oauthController");
+
+router.get('/myinfo', (req, res) => {
+    let token = req.cookies['gl-access-token']
+    let openid = req.cookies['gl-openid']
+    if (token === undefined || openid === undefined) {
+        res.redirect('/oauth/url')
+    }
+    else {
+        oAuthController.getUser({access_token: token, id_token: openid})
+            .then(user => {
+                res.json(user)
+            }).catch(err => {
+            console.log(err)
+            res.redirect('/oauth/url')
+        })
+    }
+})
 
 router.get('/find', (req, res) => {
     let id = req.query["id"]
