@@ -1,9 +1,20 @@
+import HomeLogo from "./components/HomeLogo";
+import HomeAbout from "./components/HomeAbout";
+import HomeLogin from "./components/HomeLogin";
+import Footer from "./components/Footer";
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Roomie4Me</h1>
-      </header>
+    <div
+      style={{
+        backgroundImage: `url('assets/img/background.jpg')`,
+        backgroundSize: "cover",
+      }}
+    >
+      <HomeLogo />
+      <HomeAbout />
+      <HomeLogin />
+      <Footer />
     </div>
   );
 }
