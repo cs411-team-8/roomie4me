@@ -4,7 +4,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
 const cookieParser = require("cookie-parser")
-const restApiRouter = require("./routes/restapi/main")
+const bodyParser = require("body-parser")
+const restApiRouter = require("./routes/restapi/mainRouter")
 const oAuthRouter = require("./routes/oauth")
 
 // connect to db
@@ -21,6 +22,7 @@ conn.once("open", () => {
 
 // set json parser
 app.use(express.json())
+app.use(bodyParser.json())
 app.use(cookieParser())
 // job when people send requests
 app.use((req, res, next) => {

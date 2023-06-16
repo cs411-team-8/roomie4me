@@ -1,6 +1,6 @@
 const express = require('express')
-const usersRouter = require('./user')
-const roomieRouter = require('./roomie')
+const usersRouter = require('./userRouter')
+const roomieRouter = require('./roomieRouter')
 const router = express.Router()
 
 // {site_url}/api/v1/user
