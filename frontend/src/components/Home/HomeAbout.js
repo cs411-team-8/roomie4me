@@ -4,7 +4,7 @@ function HomeAbout() {
   return (
     <div
       className="container text-white border rounded border-0 p-4 p-lg-5 py-4 py-xl-5"
-      style={{ background: "var(--bs-red)", margin: "25px auto" }}
+      style={{ background: "#77a6b1", margin: "25px auto" }}
     >
       <div className="row mb-5">
         <div className="col-md-8 col-xl-6 text-center mx-auto">
