@@ -95,6 +95,10 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    registered: {
+        type: Boolean,
+        required: true
+    },
     name: {
         firstName: {
             type: String,

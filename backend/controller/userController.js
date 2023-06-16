@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const OAuth = require('../utils/OAuth')
 const Encryptor = require("../utils/encryptor");
 const LoggedInUser = require('../models/loggedInUserModel')
-const assert = require("assert");
 
 const createUser = async (req, res, user) => {
 
@@ -67,13 +66,13 @@ const getLoggedUser = async (req, res) => {
                     firstName: userInfo.given_name,
                     lastName: userInfo.family_name
                 },
-                email: userInfo.email
+                email: userInfo.email,
+                registered: false
             })
             loggedUser = (await LoggedInUser.create({
                 user: loggedUser,
                 openid: userInfo.id,
-                oauthToken: token,
-                registered: false
+                oauthToken: token
             }))
 
         }

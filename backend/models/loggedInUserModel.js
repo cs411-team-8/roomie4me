@@ -16,10 +16,6 @@ const LoggedInUserSchema = new Schema({
         type: String,
         required: true
     },
-    registered: {
-        type: Boolean,
-        required: true
-    }
 }, {
     timestamps: true
 })
