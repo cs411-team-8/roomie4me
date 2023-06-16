@@ -2,7 +2,7 @@ import Footer from "../Footer";
 
 function CreateProfile() {
   return (
-    <div style={{ background: "#95cad6" }}>
+    <div>
       <div
         className="container text-white p-4 p-lg-5 py-4 py-xl-5"
         style={{

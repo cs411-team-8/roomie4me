@@ -6,7 +6,7 @@ import Footer from "../Footer";
 
 function Home() {
   return (
-    <div className="text-center" style={{ background: "#95cad6" }}>
+    <div className="text-center">
       <HomeLogo />
       <HomeAbout />
       <HomeLogin />
