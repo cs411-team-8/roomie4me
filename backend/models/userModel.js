@@ -91,17 +91,19 @@ const WeeklySleepScheduleSchema = new Schema({
 })
 
 const UserSchema = new Schema({
-    openid: {
-        type: String,
-        required: true
-    },
-    oauthToken: {
+    email: {
         type: String,
         required: true
     },
     name: {
-        type: NameSchema,
-        required: false
+        firstName: {
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        }
     },
     age: {
         type: Number,
