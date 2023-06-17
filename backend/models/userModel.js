@@ -91,16 +91,6 @@ const UserSchema = new Schema(
                 required: false,
             },
         },
-        housing: {
-            hasHousing: {
-                type: Boolean,
-                required: false,
-            },
-            address: {
-                type: String,
-                required: false,
-            }
-        },
         weeklySleepSchedule: {
             weekdays: {
                 bedtime: {
