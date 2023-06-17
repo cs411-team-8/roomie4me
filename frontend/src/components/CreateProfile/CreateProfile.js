@@ -40,15 +40,12 @@ function CreateProfile() {
     const firstName = document.querySelector(".fname").value;
     const lastName = document.querySelector(".lname").value;
     const gender = document.querySelector(".gender").value;
-    const age = document.querySelector(".age").value;
+    const dob = document.querySelector(".dob").value;
     const phone = document.querySelector(".phone").value;
     const email = document.querySelector(".email").value;
     const international = document.querySelector(".international").value;
     const country = document.querySelector(".country").value;
     const graduation = document.querySelector(".graduation").value;
-    const onCampus = document.querySelector(".onCampus").value;
-    const hasResidence = document.querySelector(".hasResidence").value;
-    const address = document.querySelector(".address").value;
     const smoke = document.querySelector(".smoke").value;
     const drink = document.querySelector(".drink").value;
     const weekdaySleep = document.querySelector(".weekdaySleep").value;
@@ -56,6 +53,8 @@ function CreateProfile() {
     const weekendSleep = document.querySelector(".weekendSleep").value;
     const weekendWake = document.querySelector(".weekendWake").value;
     const aboutMe = document.querySelector(".aboutMe").value;
+
+    console.log(dob);
 
     const options = {
       method: "POST",
@@ -71,7 +70,6 @@ function CreateProfile() {
           lastName: lastName,
         },
         gender: gender,
-        age: age,
         phone: phone,
         email: email,
         internationalStatus: {
@@ -79,9 +77,6 @@ function CreateProfile() {
           country: country,
         },
         graduation: graduation,
-        onCampus: onCampus,
-        hasResidence: hasResidence,
-        address: address,
         smoking: smoke,
         alcohol: drink,
         weeklySleepSchedule: {},
@@ -208,21 +203,19 @@ function CreateProfile() {
                     </select>
                   </div>
                   <div className="col">
-                    <label className="form-label" htmlFor="age">
-                      Age:
+                    <label className="form-label" htmlFor="dob">
+                      Date of Birth:
                     </label>
                     <input
-                      className="form-control form-control-sm age"
-                      type="number"
-                      name="age"
+                      className="form-control form-control-sm dob"
+                      type="date"
+                      name="dob"
                       style={{
                         marginTop: "-7px",
                         marginBottom: "7px",
                         height: "38px",
                         borderRadius: "6px",
                       }}
-                      min={13}
-                      max={150}
                       required
                     />
                   </div>
@@ -625,50 +618,6 @@ function CreateProfile() {
                   style={{ marginTop: "-7px", marginBottom: "7px" }}
                   name="graduation"
                   required
-                />
-              </div>
-              <div className="form-group required">
-                <div className="row">
-                  <div className="col">
-                    <label className="form-label" htmlFor="oncampus">
-                      On Campus/Off Campus:
-                    </label>
-                    <select
-                      className="form-select onCampus"
-                      style={{ marginTop: "-7px", marginBottom: "7px" }}
-                      name="oncampus"
-                      required
-                    >
-                      <option value={true}>On Campus</option>
-                      <option value={false}>Off Campus</option>
-                    </select>
-                  </div>
-                  <div className="col">
-                    <label className="form-label" htmlFor="residence">
-                      Do you already have a residence:
-                    </label>
-                    <select
-                      className="form-select hasResidence"
-                      style={{ marginTop: "-7px", marginBottom: "7px" }}
-                      name="residence"
-                      required
-                    >
-                      <option value={false}>No</option>
-                      <option value={true}>Yes</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <label className="form-label" htmlFor="address">
-                  Residence Address:
-                </label>
-                <input
-                  className="form-control address"
-                  type="text"
-                  style={{ marginTop: "-7px", marginBottom: "7px" }}
-                  name="address"
-                  placeholder="If you answered yes to the previous question"
                 />
               </div>
               <div className="form-group required">
