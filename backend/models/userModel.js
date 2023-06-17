@@ -27,8 +27,8 @@ const UserSchema = new Schema(
         required: false,
       },
     },
-    age: {
-      type: Number,
+    dob: {
+      type: Date,
       required: false,
     },
     gender: {
@@ -88,16 +88,6 @@ const UserSchema = new Schema(
       },
       other: {
         type: Number, // 4=often, 3=sometimes, 2=rarely, 1=never
-        required: false,
-      },
-    },
-    housing: {
-      hasHousing: {
-        type: Boolean,
-        required: false,
-      },
-      address: {
-        type: String,
         required: false,
       },
     },
