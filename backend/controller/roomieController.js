@@ -71,6 +71,21 @@ const getRequest = async (req, res, user) => {
     let authorId = req.query["authorId"]
     let targetSemester = req.query["targetSemester"]
 
+    // make sure all parameters were set
+    let variables = {
+        "authorId": authorId,
+        "targetSemester": targetSemester
+    }
+    for (let [key, value] of Object.entries(variables)) {
+        console.log(key + " // " + value)
+        if (value === undefined) {
+            res.json({
+                error: "The parameter '" + key + "' was not set!"
+            })
+            return
+        }
+    }
+
     User.findOne({
         openId: authorId
     }).then(author => {
