@@ -44,7 +44,7 @@ const DegreeProgramSchema = new Schema({
     required: true,
   },
   graduation: {
-    type: String,
+    type: Date,
     required: true,
   },
 });

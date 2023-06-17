@@ -40,8 +40,14 @@ function CreateProfile() {
     const firstName = document.querySelector(".fname").value;
     const lastName = document.querySelector(".lname").value;
     const gender = document.querySelector(".gender").value;
+    const age = document.querySelector(".age").value;
+    const phone = document.querySelector(".phone").value;
+    const email = document.querySelector(".email").value;
+    const international = document.querySelector(".international").value;
+    const country = document.querySelector(".country").value;
+    const graduation = document.querySelector(".graduation").value;
 
-    console.log(gender);
+    console.log(graduation);
     const options = {
       method: "POST",
       headers: {
@@ -51,12 +57,18 @@ function CreateProfile() {
       },
       body: `{"registered": true,
               "name": {"firstName": ${firstName}, "lastName": ${lastName}},
-              
+              "gender": ${gender},
+              "age": ${age},
+              "phone": ${phone},
+              "email": ${email},
+              "international": ${international},
+              "country": ${country},
+              "graduation": ${graduation}
              }`,
     };
-    const response = await fetch(url, options);
-    const data = await response.json();
-    console.log(data);
+    // const response = await fetch(url, options);
+    // const data = await response.json();
+    // console.log(data);
     // if (data.message === 200) {
     //   window.location.href = "/dashboard";
     // }
@@ -169,9 +181,9 @@ function CreateProfile() {
                       name="gender"
                       required
                     >
-                      <option value="Male">male</option>
-                      <option value="Female">female</option>
-                      <option value="Other">other</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
                     </select>
                   </div>
                   <div className="col">
@@ -179,7 +191,7 @@ function CreateProfile() {
                       Age:
                     </label>
                     <input
-                      className="form-control form-control-sm"
+                      className="form-control form-control-sm age"
                       type="number"
                       name="age"
                       style={{
@@ -202,8 +214,9 @@ function CreateProfile() {
                       Phone Number:
                     </label>
                     <input
-                      className="form-control form-control-sm"
-                      type="tel"
+                      className="form-control form-control-sm phone"
+                      type="text"
+                      pattern="^[0-9]{10}$"
                       style={{
                         marginTop: "-7px",
                         marginBottom: "7px",
@@ -220,7 +233,7 @@ function CreateProfile() {
                       Email Address:
                     </label>
                     <input
-                      className="form-control"
+                      className="form-control email"
                       type="email"
                       style={{ marginTop: "-7px", marginBottom: "7px" }}
                       name="email"
@@ -238,7 +251,7 @@ function CreateProfile() {
                       International Student:
                     </label>
                     <select
-                      className="form-select"
+                      className="form-select international"
                       style={{ marginTop: "-7px", marginBottom: "7px" }}
                       name="international"
                       required
@@ -252,7 +265,7 @@ function CreateProfile() {
                       Country:
                     </label>
                     <select
-                      className="form-select"
+                      className="form-select country"
                       style={{ marginTop: "-7px", marginBottom: "7px" }}
                       name="countries"
                       required
@@ -586,7 +599,7 @@ function CreateProfile() {
                   Expected Graduation:
                 </label>
                 <input
-                  className="form-control"
+                  className="form-control graduation"
                   type="month"
                   style={{ marginTop: "-7px", marginBottom: "7px" }}
                   name="graduation"
