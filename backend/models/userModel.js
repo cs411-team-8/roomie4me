@@ -27,8 +27,8 @@ const UserSchema = new Schema(
                 required: false,
             },
         },
-        age: {
-            type: Number,
+        dob: {
+            type: Date,
             required: false,
         },
         gender: {
