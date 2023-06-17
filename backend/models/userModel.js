@@ -31,6 +31,10 @@ const UserSchema = new Schema(
       type: Date,
       required: false,
     },
+    phone: {
+      type: String,
+      required: false,
+    },
     gender: {
       type: String,
       required: false,
@@ -94,21 +98,21 @@ const UserSchema = new Schema(
     weeklySleepSchedule: {
       weekdays: {
         bedtime: {
-          type: Date,
+          type: String,
           required: false,
         },
         waketime: {
-          type: Date,
+          type: String,
           required: false,
         },
       },
       weekends: {
         bedtime: {
-          type: Date,
+          type: String,
           required: false,
         },
         waketime: {
-          type: Date,
+          type: String,
           required: false,
         },
       },
