@@ -31,7 +31,7 @@ const login = async (req, res) => {
         }))
 
         // if user doesn't exist, create them
-        if (user === undefined) {
+        if (user === undefined || user === null) {
             // add the user to the db because they dont exist
             await (User.create({
                 openid: userInfo.id,
@@ -53,7 +53,7 @@ const login = async (req, res) => {
         })
 
         // set cookie
-        res.cookie('access-token', apiToken, {maxAge: 2592000, httpOnly: true})
+        res.cookie('access-token', apiToken, {maxAge: 2592000, httpOnly: false})
 
         // redirect the user back to the main page
         res.redirect('/')
