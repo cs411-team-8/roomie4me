@@ -7,12 +7,14 @@ function App() {
   useEffect(() => {
     try {
       const test = async () => {
-        const url = "http://localhost:8082" + "/api/v1/user/login";
+        const accessToken = document.cookie.split("access-token=")[1];
+        const url = "http://localhost:8082" + "/api/v1/user/myinfo";
         const options = {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
           },
         };
         const response = await fetch(url, options);
