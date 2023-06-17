@@ -80,8 +80,12 @@ const updateUser = async (req, res, user) => {
     })
 }
 
-const getUser = async (req, res, user) => {
+const myInfo = async (req, res, user) => {
     res.json(user)
 }
 
-module.exports = {login, deleteUser, updateUser, getUser}
+const getUser = async (req, res, user) => {
+    //res.json(user)
+}
+
+module.exports = {login, deleteUser, updateUser, getUser, myInfo}
