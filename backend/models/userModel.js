@@ -29,7 +29,7 @@ const InternationStatusSchema = new Schema({
     required: true,
   },
   country: {
-    type: String,
+    type: Array,
     required: true,
   },
 });
@@ -44,7 +44,7 @@ const DegreeProgramSchema = new Schema({
     required: true,
   },
   graduation: {
-    type: Date,
+    type: String,
     required: true,
   },
 });

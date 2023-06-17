@@ -46,8 +46,17 @@ function CreateProfile() {
     const international = document.querySelector(".international").value;
     const country = document.querySelector(".country").value;
     const graduation = document.querySelector(".graduation").value;
+    const onCampus = document.querySelector(".onCampus").value;
+    const hasResidence = document.querySelector(".hasResidence").value;
+    const address = document.querySelector(".address").value;
+    const smoke = document.querySelector(".smoke").value;
+    const drink = document.querySelector(".drink").value;
+    const weekdaySleep = document.querySelector(".weekdaySleep").value;
+    const weekdayWake = document.querySelector(".weekdayWake").value;
+    const weekendSleep = document.querySelector(".weekendSleep").value;
+    const weekendWake = document.querySelector(".weekendWake").value;
+    const aboutMe = document.querySelector(".aboutMe").value;
 
-    console.log(graduation);
     const options = {
       method: "POST",
       headers: {
@@ -55,16 +64,28 @@ function CreateProfile() {
         Accept: "application/json",
         Authorization: `Bearer ${accessToken}`,
       },
-      body: `{"registered": true,
-              "name": {"firstName": ${firstName}, "lastName": ${lastName}},
-              "gender": ${gender},
-              "age": ${age},
-              "phone": ${phone},
-              "email": ${email},
-              "international": ${international},
-              "country": ${country},
-              "graduation": ${graduation}
-             }`,
+      body: JSON.stringify({
+        registered: true,
+        name: {
+          firstName: firstName,
+          lastName: lastName,
+        },
+        gender: gender,
+        age: age,
+        phone: phone,
+        email: email,
+        internationalStatus: {
+          international: international,
+          country: country,
+        },
+        graduation: graduation,
+        onCampus: onCampus,
+        hasResidence: hasResidence,
+        address: address,
+        smoking: smoke,
+        alcohol: drink,
+        weeklySleepSchedule: {},
+      }),
     };
     // const response = await fetch(url, options);
     // const data = await response.json();
@@ -613,13 +634,13 @@ function CreateProfile() {
                       On Campus/Off Campus:
                     </label>
                     <select
-                      className="form-select"
+                      className="form-select onCampus"
                       style={{ marginTop: "-7px", marginBottom: "7px" }}
                       name="oncampus"
                       required
                     >
-                      <option value={1}>On Campus</option>
-                      <option value={0}>Off Campus</option>
+                      <option value={true}>On Campus</option>
+                      <option value={false}>Off Campus</option>
                     </select>
                   </div>
                   <div className="col">
@@ -627,13 +648,13 @@ function CreateProfile() {
                       Do you already have a residence:
                     </label>
                     <select
-                      className="form-select"
+                      className="form-select hasResidence"
                       style={{ marginTop: "-7px", marginBottom: "7px" }}
                       name="residence"
                       required
                     >
-                      <option value="N">No</option>
-                      <option value="Y">Yes</option>
+                      <option value={false}>No</option>
+                      <option value={true}>Yes</option>
                     </select>
                   </div>
                 </div>
@@ -643,7 +664,7 @@ function CreateProfile() {
                   Residence Address:
                 </label>
                 <input
-                  className="form-control"
+                  className="form-control address"
                   type="text"
                   style={{ marginTop: "-7px", marginBottom: "7px" }}
                   name="address"
@@ -657,15 +678,15 @@ function CreateProfile() {
                       How often do you smoke/use drugs:
                     </label>
                     <select
-                      className="form-select"
+                      className="form-select smoke"
                       style={{ marginTop: "-7px", marginBottom: "7px" }}
                       name="smoke"
                       required
                     >
-                      <option value="N">Never</option>
-                      <option value="R">Rarely</option>
-                      <option value="S">Sometimes</option>
-                      <option value="O">Often</option>
+                      <option value={1}>Never</option>
+                      <option value={2}>Rarely</option>
+                      <option value={3}>Sometimes</option>
+                      <option value={4}>Often</option>
                     </select>
                   </div>
                   <div className="col">
@@ -673,15 +694,15 @@ function CreateProfile() {
                       How often do you drink:
                     </label>
                     <select
-                      className="form-select"
+                      className="form-select drink"
                       style={{ marginTop: "-7px", marginBottom: "7px" }}
                       name="drink"
                       required
                     >
-                      <option value="N">Never</option>
-                      <option value="R">Rarely</option>
-                      <option value="S">Sometimes</option>
-                      <option value="O">Often</option>
+                      <option value={1}>Never</option>
+                      <option value={2}>Rarely</option>
+                      <option value={3}>Sometimes</option>
+                      <option value={4}>Often</option>
                     </select>
                   </div>
                 </div>
@@ -693,7 +714,7 @@ function CreateProfile() {
                       When do you usually sleep on weekdays:
                     </label>
                     <input
-                      className="form-control"
+                      className="form-control weekdaySleep"
                       type="time"
                       name="weekdaySleep"
                       required
@@ -705,7 +726,7 @@ function CreateProfile() {
                       When do you usually wake up on weekdays:
                     </label>
                     <input
-                      className="form-control"
+                      className="form-control weekdayWake"
                       type="time"
                       name="weekdayWake"
                       required
@@ -719,7 +740,7 @@ function CreateProfile() {
                       When do you usually sleep on weekends:
                     </label>
                     <input
-                      className="form-control"
+                      className="form-control weekendSleep"
                       type="time"
                       name="weekendSleep"
                       required
@@ -731,7 +752,7 @@ function CreateProfile() {
                       When do you usually wake up on weekends:
                     </label>
                     <input
-                      className="form-control"
+                      className="form-control weekendWake"
                       type="time"
                       name="weekendWake"
                       required
@@ -745,7 +766,7 @@ function CreateProfile() {
                   About you:
                 </label>
                 <textarea
-                  className="form-control"
+                  className="form-control aboutMe"
                   style={{
                     height: "100px",
                     marginTop: "-7px",
