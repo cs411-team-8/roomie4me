@@ -1,21 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const HousingInfoSchema = new Schema({
-    address: {
-        type: String,
-        required: true
-    },
-    longitude: {
-        type: Number,
-        required: true
-    },
-    latitude: {
-        type: Number,
-        required: true
-    }
-})
-
 const RoomieRequestSchema = new Schema({
     targetSemester: {
         type: String,
@@ -27,8 +12,18 @@ const RoomieRequestSchema = new Schema({
     },
     // only exists if the person has existing housing arrangements
     housingInfo: {
-        type: HousingInfoSchema,
-        required: false
+        address: {
+            type: String,
+            required: false
+        },
+        longitude: {
+            type: Number,
+            required: false
+        },
+        latitude: {
+            type: Number,
+            required: false
+        }
     },
     expiry: {
         type: Number, //epoch date
