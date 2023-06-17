@@ -16,7 +16,7 @@ router.get('/find', (req, res) => {
     })
 })
 
-router.post('/update', (res, req) => {
+router.post('/update', (req, res) => {
     tokenVerifier.getAuthenticatedUser(req).then(user => {
         UserController.updateUser(req, res, user).catch(err => {
             console.log(err)
@@ -29,7 +29,7 @@ router.post('/update', (res, req) => {
     })
 })
 
-router.delete('/delete', (res, req) => {
+router.delete('/delete', (req, res) => {
     tokenVerifier.getAuthenticatedUser(req).then(user => {
         UserController.deleteUser(req, res, user).catch(err => {
             console.log(err)

@@ -70,7 +70,14 @@ const deleteUser = async (req, res, user) => {
 }
 
 const updateUser = async (req, res, user) => {
-
+    user.updateOne(req.body).then(resp => {
+        User.findOne({
+            openid: user.openid,
+            email: user.email
+        }).then(user => {
+            res.json(user)
+        })
+    })
 }
 
 const getUser = async (req, res, user) => {
