@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema(
   {
     openid: {
-      type: String,
+      type: Number,
       required: true,
       unique: true,
     },
@@ -29,10 +29,6 @@ const UserSchema = new Schema(
     },
     dob: {
       type: Date,
-      required: false,
-    },
-    phone: {
-      type: String,
       required: false,
     },
     gender: {
@@ -98,21 +94,21 @@ const UserSchema = new Schema(
     weeklySleepSchedule: {
       weekdays: {
         bedtime: {
-          type: String,
+          type: Date,
           required: false,
         },
         waketime: {
-          type: String,
+          type: Date,
           required: false,
         },
       },
       weekends: {
         bedtime: {
-          type: String,
+          type: Date,
           required: false,
         },
         waketime: {
-          type: String,
+          type: Date,
           required: false,
         },
       },

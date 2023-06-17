@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const RoomieRequestSchema = new Schema({
+    authorId: {
+        type: Number,
+        required: true,
+    },
     targetSemester: {
         type: String,
         required: true
@@ -37,5 +41,7 @@ const RoomieRequestSchema = new Schema({
     timestamps: true,
     autoIndex: true
 })
+
+RoomieRequestSchema.index({ authorId: 1, targetSemester: 1}, { unique: true });
 
 module.exports = mongoose.model('RoomieRequest', RoomieRequestSchema)
