@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema(
     {
         openid: {
-            type: String,
+            type: Number,
             required: true,
             unique: true,
         },
