@@ -91,9 +91,15 @@ const WeeklySleepScheduleSchema = new Schema({
 })
 
 const UserSchema = new Schema({
+    openid: {
+        type: String,
+        required: true,
+        unique: true
+    },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     registered: {
         type: Boolean,
