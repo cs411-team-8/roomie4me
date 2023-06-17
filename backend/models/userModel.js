@@ -94,21 +94,21 @@ const UserSchema = new Schema(
     weeklySleepSchedule: {
       weekdays: {
         bedtime: {
-          type: Date,
+          type: String,
           required: false,
         },
         waketime: {
-          type: Date,
+          type: String,
           required: false,
         },
       },
       weekends: {
         bedtime: {
-          type: Date,
+          type: String,
           required: false,
         },
         waketime: {
-          type: Date,
+          type: String,
           required: false,
         },
       },
