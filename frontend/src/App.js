@@ -7,7 +7,7 @@ function App() {
   useEffect(() => {
     try {
       const test = async () => {
-        const url = "http://localhost:8082/api/v1/user/login";
+        const url = "http://localhost:8082" + "/api/v1/user/login";
         const options = {
           method: "GET",
           headers: {

@@ -56,7 +56,7 @@ const login = async (req, res) => {
         res.cookie('access-token', apiToken, {maxAge: 2592000, httpOnly: false})
 
         // redirect the user back to the main page
-        res.redirect('/')
+        res.redirect('http://localhost:3000/') //todo: make abstract url
     }).catch(err => {
         console.log(err)
         res.status(400).json({
