@@ -1,5 +1,6 @@
 const RoomieRequest = require('../models/roomieRequestModel')
 const User = require("../models/userModel");
+const NodeMailer = require("../utils/nodeMailer");
 
 const createRequest = async (req, res, user) => {
     if (req.body.authorId !== user.openid) {
@@ -139,4 +140,43 @@ const getRequests = async (req, res, user) => {
     //todo: query requests here
 }
 
-module.exports = {createRequest, deleteRequest, updateRequest, getRequests, getRequest}
+const contactRequest = async (req, res, user) => {
+    let authorId = req.body["authorId"]
+    let targetSemester = req.body["targetSemester"]
+    let message = req.body["message"]
+
+    // make sure all parameters were set
+    let variables = {
+        "authorId": authorId,
+        "targetSemester": targetSemester,
+        "message": message
+    }
+    for (let [key, value] of Object.entries(variables)) {
+        console.log(key + " // " + value)
+        if (value === undefined) {
+            res.json({
+                error: "The parameter '" + key + "' was not set!"
+            })
+            return
+        }
+    }
+
+    RoomieRequest.findOne({
+        openId: authorId,
+        targetSemester: targetSemester
+    }).then(rr => {
+        User.findOne({
+            openId: authorId
+        }).then(targetUser => {
+            //todo
+            // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
+            //     `
+            // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
+            // `, true)
+        })
+    })
+
+
+}
+
+module.exports = {createRequest, deleteRequest, updateRequest, getRequests, getRequest, contactRequest}

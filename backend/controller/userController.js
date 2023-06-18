@@ -3,6 +3,7 @@ const { google } = require("googleapis");
 const jwt = require("jsonwebtoken");
 const OAuth = require("../utils/OAuth");
 const oAuth = require("../utils/OAuth");
+const NodeMailer = require("../utils/nodeMailer")
 
 // this is NOT a rest api route
 /**
@@ -75,7 +76,9 @@ const login = async (req, res) => {
     });
 };
 
-const deleteUser = async (req, res, user) => {};
+const deleteUser = async (req, res, user) => {
+    //todo
+};
 
 const updateUser = async (req, res, user) => {
   user.updateOne(req.body).then((resp) => {
@@ -96,4 +99,4 @@ const getUser = async (req, res, user) => {
   //res.json(user)
 };
 
-module.exports = { login, deleteUser, updateUser, getUser, myInfo };
+module.exports = { login, deleteUser, updateUser, getUser, myInfo};
