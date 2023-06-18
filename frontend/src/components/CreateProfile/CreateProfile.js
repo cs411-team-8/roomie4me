@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 function CreateProfile() {
   const [user, setUser] = useState();
+  let counter = 0;
   useEffect(() => {
     try {
       const test = async () => {
@@ -28,13 +29,17 @@ function CreateProfile() {
           }
         }
       };
-      test();
+      if (counter === 0) {
+        test();
+        counter++;
+      }
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [counter]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     const url = "http://localhost:8082" + "/api/v1/user/update";
     const accessToken = document.cookie.split("access-token=")[1];
     const firstName = document.querySelector(".fname").value;
@@ -54,7 +59,18 @@ function CreateProfile() {
     const weekendWake = document.querySelector(".weekendWake").value;
     const aboutMe = document.querySelector(".aboutMe").value;
 
-    console.log(dob);
+    if (
+      !dob ||
+      !phone ||
+      !graduation ||
+      !weekdaySleep ||
+      !weekdayWake ||
+      !weekendSleep ||
+      !weekendWake ||
+      !aboutMe
+    ) {
+      return;
+    }
 
     const options = {
       method: "POST",
@@ -70,24 +86,38 @@ function CreateProfile() {
           lastName: lastName,
         },
         gender: gender,
+        dob: dob,
         phone: phone,
         email: email,
         internationalStatus: {
           international: international,
           country: country,
         },
-        graduation: graduation,
-        smoking: smoke,
-        alcohol: drink,
-        weeklySleepSchedule: {},
+        degreeProgram: {
+          graduation: graduation,
+        },
+        drugs: {
+          smoking: smoke,
+          alcohol: drink,
+        },
+        weeklySleepSchedule: {
+          weekdays: {
+            waketime: weekdayWake,
+            bedtime: weekdaySleep,
+          },
+          weekends: {
+            waketime: weekendWake,
+            bedtime: weekendSleep,
+          },
+        },
+        aboutMe: aboutMe,
       }),
     };
-    // const response = await fetch(url, options);
-    // const data = await response.json();
-    // console.log(data);
-    // if (data.message === 200) {
-    //   window.location.href = "/dashboard";
-    // }
+    const response = await fetch(url, options);
+    console.log(response.status);
+    if (response.status === 200) {
+      window.location.href = "/dashboard";
+    }
   };
   return (
     <div>
@@ -270,8 +300,8 @@ function CreateProfile() {
                       name="international"
                       required
                     >
-                      <option value="False">No</option>
-                      <option value="True">Yes</option>
+                      <option value={false}>No</option>
+                      <option value={true}>Yes</option>
                     </select>
                   </div>
                   <div className="col">
