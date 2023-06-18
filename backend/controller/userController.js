@@ -65,7 +65,7 @@ const login = async (req, res) => {
       });
 
       // redirect the user back to the main page
-      res.redirect("http://localhost:3000/createProfile"); //todo: make abstract url
+      res.redirect("http://localhost:3000/"); //todo: make abstract url
     })
     .catch((err) => {
       console.log(err);

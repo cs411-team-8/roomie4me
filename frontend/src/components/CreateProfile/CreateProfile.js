@@ -23,10 +23,6 @@ function CreateProfile() {
           const data = await response.json();
           console.log(data);
           setUser(data);
-          const registered = data.registered;
-          if (registered) {
-            window.location.href = "/dashboard";
-          }
         }
       };
       if (counter === 0) {
@@ -69,6 +65,7 @@ function CreateProfile() {
       !weekendWake ||
       !aboutMe
     ) {
+      alert("Please fill in all fields correctly");
       return;
     }
 
@@ -129,35 +126,50 @@ function CreateProfile() {
           borderRadius: "6px",
         }}
       >
-        <h2
-          style={{
-            textAlign: "center",
-            marginBottom: "-1px",
-            paddingTop: "0px",
-            marginTop: "45px",
-          }}
-        >
-          <img
-            src="assets/img/people.png"
-            width={117}
-            height={100}
-            style={{ marginRight: "75px" }}
-            alt="logo"
-          />
-          Hey there, welcome to Roomie4Me!
-        </h2>
-        <p
-          style={{
-            textAlign: "center",
-            paddingBottom: "0px",
-            marginBottom: "0px",
-            marginTop: "22px",
-          }}
-        >
-          We're so glad you're here! Please fill out the following form to
-          create your profile, and get started on your journey to find the
-          perfect roommate!
-        </p>
+        <div className="row">
+          <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center">
+            <img
+              className="d-inline-flex d-md-flex justify-content-md-center"
+              src="assets/img/people.png"
+              width={117}
+              height={100}
+              style={{ marginRight: "0px" }}
+              alt="logo"
+            />
+          </div>
+          <div className="col d-inline-flex justify-content-md-center align-items-md-center">
+            <h1
+              style={{
+                textAlign: "center",
+                marginBottom: "-1px",
+                paddingTop: "0px",
+                marginTop: "0px",
+              }}
+            >
+              <br />
+              Hey there, welcome to Roomie4Me!
+              <br />
+              <br />
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col d-md-flex justify-content-md-center align-items-md-center">
+            <p
+              className="d-inline-flex"
+              style={{
+                textAlign: "center",
+                paddingBottom: "0px",
+                marginTop: "36px",
+                marginBottom: "29px",
+              }}
+            >
+              We're so glad you're here! Please fill out the following form to
+              create your profile, and get started on your journey to find the
+              perfect roommate!
+            </p>
+          </div>
+        </div>
       </div>
       <div
         className="container text-white p-4 p-lg-5 py-4 py-xl-5"
