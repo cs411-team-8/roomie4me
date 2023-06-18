@@ -17,6 +17,7 @@ function NotFound() {
       <div className="row">
         <div className="col">
           <h1
+            className="rubberBand animated"
             style={{
               fontSize: "100px",
               textAlign: "center",
