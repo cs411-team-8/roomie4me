@@ -4,3 +4,29 @@
   }
 }
 
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.form-group.required .form-label:after {
+  content: " *";
+  color: red;
+}
+
+.card:hover {
+  scale: 1.05;
+}
+
+.card {
+  transition: all 0.3s;
+}
+
+.clickable-card {
+  cursor: pointer;
+}
+
+#notFound {
+  top: 50%;
+  left: 50%;
+  position: fixed;
+}

@@ -1,6 +1,7 @@
 import CreateProfile from "./components/CreateProfile/CreateProfile";
 import Home from "./components/Home/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
+import NotFound from "./components/NotFound/NotFound";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -39,6 +40,7 @@ function App() {
         {user && (
           <Route path="/dashboard" element={<Dashboard user={user} />} />
         )}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );
