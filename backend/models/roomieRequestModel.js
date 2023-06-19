@@ -39,7 +39,7 @@ const RoomieRequestSchema = new Schema(
       },
       desiredResidence: {
         type: String,
-        required: true,
+        required: false,
       },
     },
     expiry: {
