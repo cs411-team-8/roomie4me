@@ -6,7 +6,7 @@ function NotFound() {
   useEffect(() => {
     setTimeout(function () {
       setTimer(true);
-    }, 4000);
+    }, 100);
   }, []);
 
   return (
