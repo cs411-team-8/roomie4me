@@ -1,49 +1,65 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 
 function NotFound() {
+  const [timer, setTimer] = useState(false);
+
+  useEffect(() => {
+    setTimeout(function () {
+      setTimer(true);
+    }, 4000);
+  }, []);
+
   return (
-    <div
-      className="container text-white p-4 p-lg-5 py-4 py-xl-5"
-      id="notFound"
-      style={{
-        background: "#77a6b1",
-        borderRadius: "6px",
-        width: "500px",
-        height: "300px",
-        marginTop: "-150px",
-        marginLeft: "-250px",
-      }}
-    >
-      <div className="row">
-        <div className="col">
-          <h1
-            className="rubberBand animated"
+    <div>
+      {timer && (
+        <div>
+          <div
+            className="container text-white p-4 p-lg-5 py-4 py-xl-5"
+            id="notFound"
             style={{
-              fontSize: "100px",
-              textAlign: "center",
-              color: "var(--bs-red)",
+              background: "#77a6b1",
+              borderRadius: "6px",
+              width: "500px",
+              height: "300px",
+              marginTop: "-150px",
+              marginLeft: "-250px",
             }}
           >
-            Oops!
-          </h1>
+            <div className="row">
+              <div className="col">
+                <h1
+                  className="rubberBand animated"
+                  style={{
+                    fontSize: "100px",
+                    textAlign: "center",
+                    color: "var(--bs-red)",
+                  }}
+                >
+                  Oops!
+                </h1>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <h2 className="text-center">
+                  <span style={{ color: "rgb(204, 61, 72)" }}>404 </span>
+                  <span style={{ color: "rgb(0, 0, 0)" }}>
+                    - Page Not Found
+                  </span>
+                </h2>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <h6 className="text-center">
+                  The page you are looking for may have been moved, deleted, or
+                  possibly never existed
+                </h6>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <h2 className="text-center">
-            <span style={{ color: "rgb(204, 61, 72)" }}>404 </span>
-            <span style={{ color: "rgb(0, 0, 0)" }}>- Page Not Found</span>
-          </h2>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <h6 className="text-center">
-            The page you are looking for may have been moved, deleted, or
-            possibly never existed
-          </h6>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
