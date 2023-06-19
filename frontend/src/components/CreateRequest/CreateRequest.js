@@ -23,7 +23,9 @@ function CreateRequest(props) {
     const address = document.querySelector(".address")
       ? document.querySelector(".address").value
       : null;
-    const residence = document.querySelector(".residence").value;
+    const residence = document.querySelector(".residence")
+      ? document.querySelector(".residence").value
+      : null;
 
     const options = {
       method: "PUT",
@@ -44,7 +46,7 @@ function CreateRequest(props) {
       }),
     };
     const response = await fetch(url, options);
-    console.log(response.status);
+    console.log(response);
     if (response.status === 200) {
       window.location.href = "/dashboard";
       alert("Your roomie request has been submitted.");
@@ -91,7 +93,7 @@ function CreateRequest(props) {
             <button
               className="btn btn-primary"
               type="button"
-              style={{ background: "#236372", borderColor: "#236372" }}
+              style={{ background: "#074d5d", borderColor: "#074d5d" }}
               onClick={handleDashboard}
             >
               Go Back to My Dashboard
@@ -198,12 +200,7 @@ function CreateRequest(props) {
               </div>
             </div>
             {currentHousing && (
-              <div
-                className={`form-group required ${
-                  currentHousing ? "visible" : ""
-                }`}
-                id="transition-group"
-              >
+              <div className="form-group required">
                 <label className="form-label" htmlFor="address">
                   Current Housing Address:
                 </label>
@@ -216,18 +213,20 @@ function CreateRequest(props) {
                 />
               </div>
             )}
-            <div className="form-group required">
-              <label className="form-label" htmlFor="residence">
-                Desired Residence
-              </label>
-              <input
-                className="form-control residence"
-                type="text"
-                name="residence"
-                style={{ marginTop: "-7px", marginBottom: "7px" }}
-                required
-              />
-            </div>
+            {!currentHousing && (
+              <div className="form-group required">
+                <label className="form-label" htmlFor="residence">
+                  Desired Residence
+                </label>
+                <input
+                  className="form-control residence"
+                  type="text"
+                  name="residence"
+                  style={{ marginTop: "-7px", marginBottom: "7px" }}
+                  required
+                />
+              </div>
+            )}
             <div style={{ textAlign: "center" }}>
               <input
                 className="btn btn-primary"
@@ -237,8 +236,8 @@ function CreateRequest(props) {
                 style={{
                   width: "200px",
                   textAlign: "center",
-                  background: "rgb(204,61,72)",
-                  borderColor: "rgb(190,67,74)",
+                  background: "#910909",
+                  borderColor: "#910909",
                   borderTopColor: "rgb(255,",
                   borderRightColor: "255,",
                   borderBottomColor: "255)",
