@@ -5,7 +5,7 @@ const NodeMailer = require("../utils/nodeMailer");
 const createRequest = async (req, res, user) => {
   RoomieRequest.create({ ...req.body, authorId: user.openid }).then((resp) => {
     RoomieRequest.findOne({
-      authorId: user.openId,
+      authorId: user.openid,
       targetSemester: req.body.targetSemester,
     }).then((rr) => {
       res.json(rr);
@@ -85,7 +85,7 @@ const getRequest = async (req, res, user) => {
   }
 
   User.findOne({
-    openId: authorId,
+    openid: authorId,
   }).then((author) => {
     if (author.gender !== user.gender) {
       res.status(401).json({
@@ -173,21 +173,20 @@ const contactRequest = async (req, res, user) => {
     }
   }
 
-  RoomieRequest.findOne({
-    openId: authorId,
-    targetSemester: targetSemester,
-  }).then((rr) => {
-    User.findOne({
-      openId: authorId,
-    }).then((targetUser) => {
-      //todo
-      // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
-      //     `
-      // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
-      // `, true)
-    });
-  });
-};
+    RoomieRequest.findOne({
+        openId: authorId,
+        targetSemester: targetSemester
+    }).then(rr => {
+        User.findOne({
+            openId: authorId
+        }).then(targetUser => {
+            //todo
+            // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
+            //     `
+            // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
+            // `, true)
+        })
+    })
 
 module.exports = {
   createRequest,
