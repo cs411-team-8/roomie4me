@@ -26,7 +26,6 @@ function CreateRequest(props) {
     const residence = document.querySelector(".residence")
       ? document.querySelector(".residence").value
       : null;
-
     const options = {
       method: "PUT",
       headers: {
@@ -45,6 +44,18 @@ function CreateRequest(props) {
         },
       }),
     };
+    console.log(
+      JSON.stringify({
+        targetSemester: semester,
+        numberOfRoomies: numRoomies,
+        housingInfo: {
+          onCampus: onCampus,
+          hasHousing: currentHousing,
+          address: address,
+          desiredResidence: residence,
+        },
+      })
+    );
     const response = await fetch(url, options);
     console.log(response);
     if (response.status === 200) {
