@@ -43,11 +43,11 @@ const RoomieRequestSchema = new Schema(
       },
     },
     expiry: {
-      type: Number, //epoch date
+      type: Date, //epoch date
       required: true,
     },
     currentStatus: {
-      type: Number, // 1=open, 2=pending, 3=completed
+      type: String, // open, pending, completed, expired
       required: true,
     },
   },

@@ -26,6 +26,8 @@ function CreateRequest(props) {
     const residence = document.querySelector(".residence")
       ? document.querySelector(".residence").value
       : null;
+    const expiry = document.querySelector(".expiry").value;
+
     const options = {
       method: "PUT",
       headers: {
@@ -41,21 +43,12 @@ function CreateRequest(props) {
           hasHousing: currentHousing,
           address: address,
           desiredResidence: residence,
+          expiry: expiry,
+          currentStatus: "open",
         },
       }),
     };
-    console.log(
-      JSON.stringify({
-        targetSemester: semester,
-        numberOfRoomies: numRoomies,
-        housingInfo: {
-          onCampus: onCampus,
-          hasHousing: currentHousing,
-          address: address,
-          desiredResidence: residence,
-        },
-      })
-    );
+
     const response = await fetch(url, options);
     console.log(response);
     if (response.status === 200) {
@@ -63,6 +56,7 @@ function CreateRequest(props) {
       alert("Your roomie request has been submitted.");
     }
   };
+
   return (
     <div>
       <div
@@ -238,6 +232,23 @@ function CreateRequest(props) {
                 />
               </div>
             )}
+            <div className="form-group required">
+              <label className="form-label" htmlFor="expiry">
+                Request Deadline:
+              </label>
+              <input
+                className="form-control form-control-sm expiry"
+                type="date"
+                name="expiry"
+                style={{
+                  marginTop: "-7px",
+                  marginBottom: "7px",
+                  height: "38px",
+                  borderRadius: "6px",
+                }}
+                required
+              />
+            </div>
             <div style={{ textAlign: "center" }}>
               <input
                 className="btn btn-primary"
