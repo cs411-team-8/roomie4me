@@ -55,20 +55,6 @@ function CreateProfile() {
     const weekendWake = document.querySelector(".weekendWake").value;
     const aboutMe = document.querySelector(".aboutMe").value;
 
-    if (
-      !dob ||
-      !phone ||
-      !graduation ||
-      !weekdaySleep ||
-      !weekdayWake ||
-      !weekendSleep ||
-      !weekendWake ||
-      !aboutMe
-    ) {
-      alert("Please fill in all fields correctly");
-      return;
-    }
-
     const options = {
       method: "POST",
       headers: {
@@ -166,7 +152,7 @@ function CreateProfile() {
             >
               We're so glad you're here! Please fill out the following form to
               create your profile, and get started on your journey to find the
-              perfect roommate!
+              perfect roomies!
             </p>
           </div>
         </div>
@@ -182,7 +168,7 @@ function CreateProfile() {
       >
         {user && (
           <section>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="form-group required">
                 <div className="row">
                   <div className="col">
@@ -775,7 +761,6 @@ function CreateProfile() {
                   type="submit"
                   name="submitProfile"
                   required
-                  onClick={handleSubmit}
                   style={{
                     width: "200px",
                     textAlign: "center",
