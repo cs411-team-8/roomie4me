@@ -43,9 +43,9 @@ function CreateRequest(props) {
           hasHousing: currentHousing,
           address: address,
           desiredResidence: residence,
-          expiry: expiry,
-          currentStatus: "open",
         },
+        expiry: expiry,
+        currentStatus: "open",
       }),
     };
 

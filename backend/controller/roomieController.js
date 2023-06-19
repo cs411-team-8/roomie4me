@@ -173,21 +173,21 @@ const contactRequest = async (req, res, user) => {
     }
   }
 
-    RoomieRequest.findOne({
-        openId: authorId,
-        targetSemester: targetSemester
-    }).then(rr => {
-        User.findOne({
-            openId: authorId
-        }).then(targetUser => {
-            //todo
-            // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
-            //     `
-            // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
-            // `, true)
-        })
-    })
-
+  RoomieRequest.findOne({
+    openid: authorId,
+    targetSemester: targetSemester,
+  }).then((rr) => {
+    User.findOne({
+      openid: authorId,
+    }).then((targetUser) => {
+      //todo
+      // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
+      //     `
+      // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
+      // `, true)
+    });
+  });
+};
 module.exports = {
   createRequest,
   deleteRequest,
