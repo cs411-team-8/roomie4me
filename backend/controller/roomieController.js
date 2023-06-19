@@ -3,15 +3,9 @@ const User = require("../models/userModel");
 const NodeMailer = require("../utils/nodeMailer");
 
 const createRequest = async (req, res, user) => {
-    if (req.body.authorId !== user.openid) {
-        res.status(401).json(
-            {error: "Unauthorized! You can't create a request for another user."}
-        )
-        return
-    }
     RoomieRequest.create(req.body).then((resp) => {
         RoomieRequest.findOne({
-            authorId: req.body.authorId,
+            authorId: user.openId,
             targetSemester: req.body.targetSemester
         }).then((rr) => {
             res.json(rr)
@@ -118,14 +112,12 @@ const getRequests = async (req, res, user) => {
     let batch = req.query["batch-size"]
     let size = req.query["sort-size"]
     let sortMode = req.query["sort-mode"]
-    let flagMask = req.query["active-filters"]
     // make sure all parameters were set
     let variables = {
         "page-number": page,
         "batch-size": batch,
         "sort-size": size,
-        "sort-mode": sortMode,
-        "active-filters": flagMask
+        "sort-mode": sortMode
     }
     for (let [key, value] of Object.entries(variables)) {
         console.log(key + " // " + value)
@@ -137,7 +129,25 @@ const getRequests = async (req, res, user) => {
         }
     }
 
-    //todo: query requests here
+    //todo: return queried requests here
+    RoomieRequest.find().then(requests => {
+        requests.filter(rr => {
+            //todo
+        }).sort((rr1, rr2) => {
+            // sort by the last name of the creator
+            if (sortMode === 'alphabetic') {
+
+            }
+            // sort by time created
+            else if (sortMode === 'creation') {
+
+            }
+            // the default personalized sorter that automatically finds the best match
+            else {
+
+            }
+        })
+    })
 }
 
 const contactRequest = async (req, res, user) => {
