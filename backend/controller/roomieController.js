@@ -3,18 +3,21 @@ const User = require("../models/userModel");
 const NodeMailer = require("../utils/nodeMailer");
 
 const createRequest = async (req, res, user) => {
-  RoomieRequest.create({ ...req.body, authorId: user.openid }).then((resp) => {
-    RoomieRequest.findOne({
-      authorId: user.openid,
-      targetSemester: req.body.targetSemester,
-    }).then((rr) => {
-      res.json(rr);
-    });
-  }).catch(err => {
-        console.log(err)
-        res.status(500).json({
-            error: "An internal server error occurred. Is this a duplicate request?"
-        })
+  RoomieRequest.create({ ...req.body, authorId: user.openid })
+    .then((resp) => {
+      RoomieRequest.findOne({
+        authorId: user.openid,
+        targetSemester: req.body.targetSemester,
+      }).then((rr) => {
+        res.json(rr);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error:
+          "An internal server error occurred. Is this a duplicate request?",
+      });
     });
 };
 
@@ -109,17 +112,19 @@ const getRequest = async (req, res, user) => {
 };
 
 const getMyRequests = async (req, res, user) => {
-    RoomieRequest.find({
-        authorId: user.openid
-    }).then(requests => {
-        res.json(requests)
-    }).catch(err => {
-        console.log(err)
-        res.status(500).json({
-            error: "An internal server error occurred!"
-        })
+  RoomieRequest.find({
+    authorId: user.openid,
+  })
+    .then((requests) => {
+      res.json(requests);
     })
-}
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: "An internal server error occurred!",
+      });
+    });
+};
 
 /**
  *
@@ -150,30 +155,30 @@ const getRequests = async (req, res, user) => {
     }
   }
 
-    //todo: return queried requests here
-    RoomieRequest.find().then(requests => {
-        requests.filter(rr => {
-            //todo
-        }).sort((rr1, rr2) => {
-            // sort by the last name of the creator
-            if (sortMode === 'alphabetic') {
-
-            }
-            // sort by time created
-            else if (sortMode === 'creation') {
-
-            }
-            // the default personalized sorter that automatically finds the best match
-            else {
-                // for each room request:
-                // 1. find what % match is this user to target user given their profile + preferences
-                // 2. find what % match is target user to this user given their profile + preferences
-                // 3. find the average of the two percentages
-                // 4. now sort by this number
-            }
-        })
-    })
-}
+  //todo: return queried requests here
+  RoomieRequest.find().then((requests) => {
+    requests
+      .filter((rr) => {
+        //todo
+      })
+      .sort((rr1, rr2) => {
+        // sort by the last name of the creator
+        if (sortMode === "alphabetic") {
+        }
+        // sort by time created
+        else if (sortMode === "creation") {
+        }
+        // the default personalized sorter that automatically finds the best match
+        else {
+          // for each room request:
+          // 1. find what % match is this user to target user given their profile + preferences
+          // 2. find what % match is target user to this user given their profile + preferences
+          // 3. find the average of the two percentages
+          // 4. now sort by this number
+        }
+      });
+  });
+};
 
 const contactRequest = async (req, res, user) => {
   let authorId = req.body["authorId"];
@@ -218,4 +223,5 @@ module.exports = {
   getRequests,
   getRequest,
   contactRequest,
+  getMyRequests,
 };
