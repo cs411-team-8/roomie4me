@@ -13,11 +13,11 @@ input[type="number"] {
   color: red;
 }
 
-.card:hover {
+#dashboardCard:hover {
   scale: 1.05;
 }
 
-.card {
+#dashboardCard {
   transition: all 0.3s;
 }
 

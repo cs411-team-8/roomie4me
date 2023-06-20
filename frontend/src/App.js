@@ -5,6 +5,7 @@ import NotFound from "./components/Errors/NotFound";
 import CreateRequest from "./components/CreateRequest/CreateRequest";
 import RequestsFull from "./components/Errors/RequestsFull";
 import NotLoggedIn from "./components/Errors/NotLoggedIn";
+import ViewRequests from "./components/ViewRequests/ViewRequests";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -99,6 +100,12 @@ function App() {
         )}
 
         {!user && <Route path="/createRequest" element={<NotLoggedIn />} />}
+
+        {user && (
+          <Route path="/viewRequests" element={<ViewRequests user={user} />} />
+        )}
+
+        {!user && <Route path="/viewRequests" element={<NotLoggedIn />} />}
 
         <Route path="*" element={<NotFound />} />
       </Routes>

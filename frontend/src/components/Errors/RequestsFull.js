@@ -28,7 +28,6 @@ function RequestsFull() {
             <div className="row">
               <div className="col">
                 <h1
-                  data-bss-disabled-mobile="true"
                   className="rubberBand animated"
                   style={{
                     fontSize: "100px",

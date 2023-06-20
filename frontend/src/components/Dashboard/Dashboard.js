@@ -88,6 +88,7 @@ function Dashboard(props) {
         <div className="row">
           <div className="col">
             <div
+              id="dashboardCard"
               className="card clickable-card"
               style={{
                 background: "#074d5d",
@@ -138,6 +139,7 @@ function Dashboard(props) {
           </div>
           <div className="col">
             <div
+              id="dashboardCard"
               className="card clickable-card"
               style={{
                 background: "#074d5d",
@@ -190,6 +192,7 @@ function Dashboard(props) {
         <div className="row">
           <div className="col" style={{ marginTop: "30px" }}>
             <div
+              id="dashboardCard"
               className="card clickable-card"
               style={{
                 background: "#074d5d",
@@ -240,6 +243,7 @@ function Dashboard(props) {
           </div>
           <div className="col" style={{ marginTop: "30px" }}>
             <div
+              id="dashboardCard"
               className="card clickable-card"
               style={{
                 background: "#074d5d",
