@@ -10,6 +10,11 @@ const createRequest = async (req, res, user) => {
         }).then((rr) => {
             res.json(rr)
         });
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json({
+            error: "An internal server error occurred. Is this a duplicate request?"
+        })
     });
 }
 
@@ -100,6 +105,19 @@ const getRequest = async (req, res, user) => {
 
 }
 
+const getMyRequests = async (req, res, user) => {
+    RoomieRequest.find({
+        authorId: user.openid
+    }).then(requests => {
+        res.json(requests)
+    }).catch(err => {
+        console.log(err)
+        res.status(500).json({
+            error: "An internal server error occurred!"
+        })
+    })
+}
+
 /**
  *
  * @param req
@@ -144,7 +162,11 @@ const getRequests = async (req, res, user) => {
             }
             // the default personalized sorter that automatically finds the best match
             else {
-
+                // for each room request:
+                // 1. find what % match is this user to target user given their profile + preferences
+                // 2. find what % match is target user to this user given their profile + preferences
+                // 3. find the average of the two percentages
+                // 4. now sort by this number
             }
         })
     })
