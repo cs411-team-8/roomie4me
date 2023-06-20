@@ -1,9 +1,10 @@
 import CreateProfile from "./components/CreateProfile/CreateProfile";
 import Home from "./components/Home/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
-import NotFound from "./components/NotFound/NotFound";
+import NotFound from "./components/Errors/NotFound";
 import CreateRequest from "./components/CreateRequest/CreateRequest";
-import RequestsFull from "./components/CreateRequest/RequestsFull";
+import RequestsFull from "./components/Errors/RequestsFull";
+import NotLoggedIn from "./components/Errors/NotLoggedIn";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -66,22 +67,39 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/createProfile" element={<CreateProfile />} />
+
+        {user && !user.registered && (
+          <Route
+            path="/createProfile"
+            element={<CreateProfile user={user} />}
+          />
+        )}
+
+        {!user && <Route path="/createProfile" element={<NotLoggedIn />} />}
+
+        {user && !user.registered && (
+          <Route path="/createProfile" element={<CreateProfile />} />
+        )}
+
         {user && (
           <Route path="/dashboard" element={<Dashboard user={user} />} />
         )}
+
+        {!user && <Route path="/dashboard" element={<NotLoggedIn />} />}
+
         {user && requests && requests.length < 7 && (
           <Route
             path="/createRequest"
             element={<CreateRequest user={user} requests={requests} />}
           />
         )}
+
         {user && requests && requests.length >= 7 && (
-          <Route
-            path="/createRequest"
-            element={<RequestsFull user={user} requests={requests} />}
-          />
+          <Route path="/createRequest" element={<RequestsFull />} />
         )}
+
+        {!user && <Route path="/createRequest" element={<NotLoggedIn />} />}
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

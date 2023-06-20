@@ -251,9 +251,7 @@ function Dashboard(props) {
               <div className="card-body">
                 <div className="row">
                   <div className="col">
-                    <h3>
-                      My DMs ({"{"}num{"}"} new)
-                    </h3>
+                    <h3>My DMs (3 new)</h3>
                   </div>
                 </div>
                 <div className="row">
