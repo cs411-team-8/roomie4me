@@ -79,7 +79,7 @@ function CreateRequest(props) {
             />
           </div>
           <div className="col d-inline-flex justify-content-md-center align-items-md-center">
-            <h3
+            <h2
               style={{
                 textAlign: "center",
                 marginBottom: "-1px",
@@ -90,8 +90,9 @@ function CreateRequest(props) {
             >
               Hi, {props.user.name.firstName}! Please fill out the following
               form to create a new roomie request.
-            </h3>
+            </h2>
           </div>
+          <div class="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center"></div>
         </div>
         <div className="row">
           <div className="col d-md-flex justify-content-md-end align-items-md-center">
