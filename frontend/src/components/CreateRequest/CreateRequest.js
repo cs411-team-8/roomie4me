@@ -9,6 +9,7 @@ function CreateRequest(props) {
       setTimer(true);
     }, 50);
   }, []);
+
   const [currentHousing, setCurrentHousing] = useState(false);
 
   const handleCurrentHousingChange = (event) => {

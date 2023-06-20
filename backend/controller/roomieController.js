@@ -74,8 +74,8 @@ const updateRequest = async (req, res, user) => {
  * @returns {Promise<RoomieRequest>}
  */
 const getRequest = async (req, res, user) => {
-  let authorId = req.query["authorId"];
-  let targetSemester = req.query["targetSemester"];
+  let authorId = req.body["authorId"];
+  let targetSemester = req.body["targetSemester"];
 
   // make sure all parameters were set
   let variables = {
@@ -136,13 +136,11 @@ const getMyRequests = async (req, res, user) => {
 const getRequests = async (req, res, user) => {
   let page = req.query["page-number"];
   let batch = req.query["batch-size"];
-  let size = req.query["sort-size"];
   let sortMode = req.query["sort-mode"];
   // make sure all parameters were set
   let variables = {
     "page-number": page,
     "batch-size": batch,
-    "sort-size": size,
     "sort-mode": sortMode,
   };
   for (let [key, value] of Object.entries(variables)) {
@@ -160,6 +158,7 @@ const getRequests = async (req, res, user) => {
     requests
       .filter((rr) => {
         //todo
+        return true;
       })
       .sort((rr1, rr2) => {
         // sort by the last name of the creator
@@ -167,6 +166,11 @@ const getRequests = async (req, res, user) => {
         }
         // sort by time created
         else if (sortMode === "creation") {
+          if (rr1.createdAt > rr2.createdAt) {
+            return 1;
+          } else {
+            return -1;
+          }
         }
         // the default personalized sorter that automatically finds the best match
         else {
@@ -177,6 +181,7 @@ const getRequests = async (req, res, user) => {
           // 4. now sort by this number
         }
       });
+    res.json(requests);
   });
 };
 
