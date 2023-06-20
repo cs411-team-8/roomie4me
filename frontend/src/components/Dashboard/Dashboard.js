@@ -61,7 +61,7 @@ function Dashboard(props) {
               Welcome, {props.user.name.firstName}!
             </h1>
           </div>
-          <div class="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center"></div>
+          <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center"></div>
         </div>
         <div className="row">
           <div className="col d-md-flex justify-content-md-end align-items-md-center">

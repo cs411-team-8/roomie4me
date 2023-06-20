@@ -92,7 +92,7 @@ function CreateRequest(props) {
               form to create a new roomie request.
             </h2>
           </div>
-          <div class="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center"></div>
+          <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center"></div>
         </div>
         <div className="row">
           <div className="col d-md-flex justify-content-md-end align-items-md-center">
@@ -132,11 +132,33 @@ function CreateRequest(props) {
                 name="semester"
                 required
               >
-                <option value="Summer 2023">Summer 2023</option>
-                <option value="Fall 2023">Fall 2023</option>
-                <option value="Spring 2024">Spring 2024</option>
-                <option value="Summer 2024">Summer 2024</option>
-                <option value="Fall 2024">Fall 2024</option>
+                {!props.requests.some(
+                  (request) => request.targetSemester === "Summer 1 2023"
+                ) && <option value="Summer 1 2023">Summer 1 2023</option>}
+
+                {!props.requests.some(
+                  (request) => request.targetSemester === "Summer 2 2023"
+                ) && <option value="Summer 2 2023">Summer 2 2023</option>}
+
+                {!props.requests.some(
+                  (request) => request.targetSemester === "Fall 2023"
+                ) && <option value="Fall 2023">Fall 2023</option>}
+
+                {!props.requests.some(
+                  (request) => request.targetSemester === "Spring 2024"
+                ) && <option value="Spring 2024">Spring 2024</option>}
+
+                {!props.requests.some(
+                  (request) => request.targetSemester === "Summer 1 2024"
+                ) && <option value="Summer 1 2024">Summer 1 2024</option>}
+
+                {!props.requests.some(
+                  (request) => request.targetSemester === "Summer 2 2024"
+                ) && <option value="Summer 2 2024">Summer 2 2024</option>}
+
+                {!props.requests.some(
+                  (request) => request.targetSemester === "Fall 2024"
+                ) && <option value="Fall 2024">Fall 2024</option>}
               </select>
             </div>
             <div className="form-group required">
