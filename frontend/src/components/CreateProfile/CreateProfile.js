@@ -120,7 +120,7 @@ function CreateProfile() {
               width={117}
               height={100}
               style={{ marginRight: "0px" }}
-              alt="logo"
+              alt="Logo"
             />
           </div>
           <div className="col d-inline-flex justify-content-md-center align-items-md-center">
@@ -138,9 +138,13 @@ function CreateProfile() {
               <br />
             </h1>
           </div>
+          <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center" />
         </div>
         <div className="row">
-          <div className="col d-md-flex justify-content-md-center align-items-md-center">
+          <div
+            className="col d-md-flex justify-content-md-center align-items-md-center"
+            style={{ marginTop: "-32px" }}
+          >
             <p
               className="d-inline-flex"
               style={{
@@ -152,7 +156,7 @@ function CreateProfile() {
             >
               We're so glad you're here! Please fill out the following form to
               create your profile, and get started on your journey to find the
-              perfect roomies!
+              perfect roommate!
             </p>
           </div>
         </div>

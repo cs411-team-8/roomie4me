@@ -26,6 +26,8 @@ function CreateRequest(props) {
     const residence = document.querySelector(".residence")
       ? document.querySelector(".residence").value
       : null;
+    const expiry = document.querySelector(".expiry").value;
+
     const options = {
       method: "PUT",
       headers: {
@@ -42,20 +44,11 @@ function CreateRequest(props) {
           address: address,
           desiredResidence: residence,
         },
+        expiry: expiry,
+        currentStatus: "open",
       }),
     };
-    console.log(
-      JSON.stringify({
-        targetSemester: semester,
-        numberOfRoomies: numRoomies,
-        housingInfo: {
-          onCampus: onCampus,
-          hasHousing: currentHousing,
-          address: address,
-          desiredResidence: residence,
-        },
-      })
-    );
+
     const response = await fetch(url, options);
     console.log(response);
     if (response.status === 200) {
@@ -63,6 +56,7 @@ function CreateRequest(props) {
       alert("Your roomie request has been submitted.");
     }
   };
+
   return (
     <div>
       <div
@@ -85,7 +79,7 @@ function CreateRequest(props) {
             />
           </div>
           <div className="col d-inline-flex justify-content-md-center align-items-md-center">
-            <h3
+            <h2
               style={{
                 textAlign: "center",
                 marginBottom: "-1px",
@@ -96,8 +90,9 @@ function CreateRequest(props) {
             >
               Hi, {props.user.name.firstName}! Please fill out the following
               form to create a new roomie request.
-            </h3>
+            </h2>
           </div>
+          <div class="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center"></div>
         </div>
         <div className="row">
           <div className="col d-md-flex justify-content-md-end align-items-md-center">
@@ -238,6 +233,23 @@ function CreateRequest(props) {
                 />
               </div>
             )}
+            <div className="form-group required">
+              <label className="form-label" htmlFor="expiry">
+                Request Deadline:
+              </label>
+              <input
+                className="form-control form-control-sm expiry"
+                type="date"
+                name="expiry"
+                style={{
+                  marginTop: "-7px",
+                  marginBottom: "7px",
+                  height: "38px",
+                  borderRadius: "6px",
+                }}
+                required
+              />
+            </div>
             <div style={{ textAlign: "center" }}>
               <input
                 className="btn btn-primary"

@@ -1,3 +1,6 @@
+
+
+
 // Assume isLoggedIn is a variable indicating the login status
 
 const isLoggedIn = false; // Change this to true if the user is logged in
@@ -166,3 +169,11 @@ const users = [
   // Call the function to generate user blocks
   generateUserBlocks();
   
+
+
+
+
+
+
+
+
