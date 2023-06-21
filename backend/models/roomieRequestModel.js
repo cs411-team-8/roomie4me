@@ -42,6 +42,44 @@ const RoomieRequestSchema = new Schema(
         required: false,
       },
     },
+    // how important is similarity in these categories to the user
+    preferences: {
+      similarAge: {
+        type: Number,
+        required: false,
+        default: 3,
+      },
+      similarLanguages: {
+        type: Number,
+        required: false,
+        default: 3,
+      },
+      similarReligion: {
+        type: Number,
+        required: false,
+        default: 3,
+      },
+      similarInternationalStatus: {
+        type: Number,
+        required: false,
+        default: 3,
+      },
+      similarDegreeProgram: {
+        type: Number,
+        required: false,
+        default: 3,
+      },
+      similarDrugIntake: {
+        type: Number,
+        required: false,
+        default: 3,
+      },
+      similarSleepSchedule: {
+        type: Number,
+        required: false,
+        default: 3,
+      },
+    },
     expiry: {
       type: Date, //epoch date
       required: true,
