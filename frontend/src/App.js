@@ -6,6 +6,7 @@ import CreateRequest from "./components/CreateRequest/CreateRequest";
 import RequestsFull from "./components/Errors/RequestsFull";
 import NotLoggedIn from "./components/Errors/NotLoggedIn";
 import ViewRequests from "./components/ViewRequests/ViewRequests";
+import InDev from "./components/Errors/InDev";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -106,6 +107,14 @@ function App() {
         )}
 
         {!user && <Route path="/viewRequests" element={<NotLoggedIn />} />}
+
+        {user && <Route path="/myAccount" element={<InDev />} />}
+
+        {!user && <Route path="/myAccount" element={<NotLoggedIn />} />}
+
+        {user && <Route path="/myDMs" element={<InDev />} />}
+
+        {!user && <Route path="/myDMs" element={<NotLoggedIn />} />}
 
         <Route path="*" element={<NotFound />} />
       </Routes>
