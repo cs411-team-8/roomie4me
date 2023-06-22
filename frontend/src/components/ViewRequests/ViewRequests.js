@@ -110,29 +110,28 @@ function ViewRequests() {
               paddingBottom: "0px",
             }}
           >
-            {requests.map((request, index) => (
+            {requests.map((request) => (
               <div
                 className="card clickable-card"
                 style={{
-                  background: index % 2 === 0 ? "#074d5d" : "#ffffff",
-                  borderColor: index % 2 === 0 ? "#074d5d" : "#ffffff",
+                  background: "#074d5d",
+                  borderColor: "#074d5d",
                   marginBottom: "10px",
                 }}
-                key={index}
               >
                 <div className="card-body">
                   <div className="row">
                     <div className="col-md-5">
                       <h4
                         style={{
-                          color: index % 2 === 0 ? "#ffffff" : "#074d5d",
+                          color: "#ffffff",
                         }}
                       >
                         Munir Siddiqui
                       </h4>
                       <p
                         style={{
-                          color: index % 2 === 0 ? "#ffffff" : "#074d5d",
+                          color: "#ffffff",
                           marginBottom: "0px",
                         }}
                       >
@@ -143,7 +142,7 @@ function ViewRequests() {
                       </p>
                       <p
                         style={{
-                          color: index % 2 === 0 ? "#ffffff" : "#074d5d",
+                          color: "#ffffff",
                           marginBottom: "0px",
                         }}
                       >
@@ -152,7 +151,7 @@ function ViewRequests() {
                       {request.housingInfo.onCampus !== null && (
                         <p
                           style={{
-                            color: index % 2 === 0 ? "#ffffff" : "#074d5d",
+                            color: "#ffffff",
                             marginBottom: "0px",
                           }}
                         >
@@ -163,7 +162,7 @@ function ViewRequests() {
                       )}
                       <p
                         style={{
-                          color: index % 2 === 0 ? "#ffffff" : "#074d5d",
+                          color: "#ffffff",
                           marginBottom: "0px",
                         }}
                       >
@@ -175,7 +174,7 @@ function ViewRequests() {
                     <div className="col">
                       <p
                         style={{
-                          color: index % 2 === 0 ? "#ffffff" : "#074d5d",
+                          color: "#ffffff",
                           marginBottom: "0px",
                         }}
                       >
@@ -197,7 +196,7 @@ function ViewRequests() {
                         fill="currentColor"
                         style={{
                           fontSize: "32px",
-                          color: index % 2 === 0 ? "#ffffff" : "#074d5d",
+                          color: "#ffffff",
                         }}
                       >
                         <path d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z" />
