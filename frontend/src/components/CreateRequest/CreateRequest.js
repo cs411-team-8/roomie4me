@@ -121,7 +121,7 @@ function CreateRequest(props) {
                   }}
                 >
                   Please fill out the following form to create a new roomie
-                  request.
+                  request
                 </h2>
               </div>
               <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center"></div>

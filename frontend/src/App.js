@@ -6,6 +6,8 @@ import CreateRequest from "./components/CreateRequest/CreateRequest";
 import RequestsFull from "./components/Errors/RequestsFull";
 import NotLoggedIn from "./components/Errors/NotLoggedIn";
 import ViewRequests from "./components/ViewRequests/ViewRequests";
+import DetailedRequest from "./components/ViewRequests/DetailedRequest";
+import MyAccount from "./components/MyAccount/MyAccount";
 import InDev from "./components/Errors/InDev";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -38,7 +40,7 @@ function App() {
     }
   }, []);
 
-  const [requests, setRequests] = useState([]);
+  const [myRequests, setRequests] = useState([]);
   useEffect(() => {
     try {
       const test = async () => {
@@ -89,14 +91,14 @@ function App() {
 
         {!user && <Route path="/dashboard" element={<NotLoggedIn />} />}
 
-        {user && requests && requests.length < 7 && (
+        {user && myRequests && myRequests.length < 7 && (
           <Route
             path="/createRequest"
-            element={<CreateRequest requests={requests} />}
+            element={<CreateRequest requests={myRequests} />}
           />
         )}
 
-        {user && requests && requests.length >= 7 && (
+        {user && myRequests && myRequests.length >= 7 && (
           <Route path="/createRequest" element={<RequestsFull />} />
         )}
 
@@ -106,13 +108,24 @@ function App() {
 
         {!user && <Route path="/viewRequests" element={<NotLoggedIn />} />}
 
-        {user && <Route path="/myAccount" element={<InDev />} />}
+        {user && (
+          <Route path="/myAccount" element={<MyAccount user={user} />} />
+        )}
 
         {!user && <Route path="/myAccount" element={<NotLoggedIn />} />}
 
         {user && <Route path="/myDMs" element={<InDev />} />}
 
         {!user && <Route path="/myDMs" element={<NotLoggedIn />} />}
+
+        {user && (
+          <Route
+            path="/request/:authorid/:semester"
+            element={<DetailedRequest user={user} />}
+          />
+        )}
+
+        {!user && <Route path="/:semester" element={<NotLoggedIn />} />}
 
         <Route path="*" element={<NotFound />} />
       </Routes>

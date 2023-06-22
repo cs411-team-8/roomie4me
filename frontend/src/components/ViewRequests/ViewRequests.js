@@ -2,6 +2,12 @@ import { React, useEffect, useState } from "react";
 import Footer from "../Footer";
 
 function ViewRequests() {
+  const test = async (event) => {
+    const semester = event.target.closest(".clickable-card").dataset.semester;
+    const authorId = event.target.closest(".clickable-card").dataset.id;
+    window.location.href = `/request/${authorId}/${semester}`;
+  };
+
   const [timer, setTimer] = useState(false);
 
   useEffect(() => {
@@ -49,7 +55,6 @@ function ViewRequests() {
       console.log(error);
     }
   }, []);
-
   return (
     <div>
       {timer && (
@@ -83,7 +88,7 @@ function ViewRequests() {
                     marginRight: "0px",
                   }}
                 >
-                  These are the current open roomie requests.
+                  These are the current open roomie requests
                 </h2>
               </div>
               <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center" />
@@ -118,6 +123,10 @@ function ViewRequests() {
                   borderColor: "#074d5d",
                   marginBottom: "10px",
                 }}
+                onClick={test}
+                data-semester={request.targetSemester}
+                data-id={request.authorId}
+                key={request._id}
               >
                 <div className="card-body">
                   <div className="row">
