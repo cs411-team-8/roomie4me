@@ -54,6 +54,7 @@ function CreateProfile(props) {
     const weekendSleep = document.querySelector(".weekendSleep").value;
     const weekendWake = document.querySelector(".weekendWake").value;
     const aboutMe = document.querySelector(".aboutMe").value;
+    const religion = document.querySelector(".religion").value;
 
     const options = {
       method: "POST",
@@ -76,6 +77,7 @@ function CreateProfile(props) {
           international: international,
           country: country,
         },
+        religiousAffiliation: religion,
         degreeProgram: {
           graduation: graduation,
         },
@@ -229,6 +231,11 @@ function CreateProfile(props) {
                     name="gender"
                     required
                   >
+                    <option
+                      value=""
+                      selected="selected"
+                      disabled="disabled"
+                    ></option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
@@ -291,6 +298,18 @@ function CreateProfile(props) {
               </div>
             </div>
             <div className="form-group required">
+              <label className="form-label" htmlFor="graduation">
+                Expected Graduation:
+              </label>
+              <input
+                className="form-control graduation"
+                type="month"
+                style={{ marginTop: "-7px", marginBottom: "7px" }}
+                name="graduation"
+                required
+              />
+            </div>
+            <div className="form-group required">
               <div className="row">
                 <div className="col">
                   <label className="form-label" htmlFor="international">
@@ -302,8 +321,13 @@ function CreateProfile(props) {
                     name="international"
                     required
                   >
-                    <option value={false}>No</option>
+                    <option
+                      value=""
+                      selected="selected"
+                      disabled="disabled"
+                    ></option>
                     <option value={true}>Yes</option>
+                    <option value={false}>No</option>
                   </select>
                 </div>
                 <div className="col">
@@ -316,7 +340,11 @@ function CreateProfile(props) {
                     name="countries"
                     required
                   >
-                    <option value="United States">United States</option>
+                    <option
+                      value=""
+                      selected="selected"
+                      disabled="disabled"
+                    ></option>
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Åland Islands">Åland Islands</option>
                     <option value="Albania">Albania</option>
@@ -611,6 +639,7 @@ function CreateProfile(props) {
                       United Arab Emirates
                     </option>
                     <option value="United Kingdom">United Kingdom</option>
+                    <option value="United States">United States</option>
                     <option value="United States Minor Outlying Islands">
                       United States Minor Outlying Islands
                     </option>
@@ -635,22 +664,57 @@ function CreateProfile(props) {
               </div>
             </div>
             <div className="form-group required">
-              <label className="form-label" htmlFor="graduation">
-                Expected Graduation:
+              <label className="form-label" htmlFor="religion">
+                Religion:
               </label>
-              <input
-                className="form-control graduation"
-                type="month"
+              <select
+                className="form-select religion"
                 style={{ marginTop: "-7px", marginBottom: "7px" }}
-                name="graduation"
+                name="religion"
                 required
-              />
+              >
+                <option
+                  value=""
+                  selected="selected"
+                  disabled="disabled"
+                ></option>
+                <option value="African Traditional and Diasporic">
+                  African Traditional and Diasporic
+                </option>
+                <option value="Agnosticism">Agnosticism</option>
+                <option value="Atheism">Atheism</option>
+                <option value="Baha'i">Baha'i</option>
+                <option value="Buddhism">Buddhism</option>
+                <option value="Cao Dai">Cao Dai</option>
+                <option value="Chinese Traditional Religion">
+                  Chinese Traditional Religion
+                </option>
+                <option value="Christianity">Christianity</option>
+                <option value="Hinduism">Hinduism</option>
+                <option value="Islam">Islam</option>
+                <option value="Jainism">Jainism</option>
+                <option value="Juche">Juche</option>
+                <option value="Judaism">Judaism</option>
+                <option value="Neo-Paganism">Neo-Paganism</option>
+                <option value="Nonreligious">Nonreligious</option>
+                <option value="Rastafarianism">Rastafarianism</option>
+                <option value="Shinto">Shinto</option>
+                <option value="Sikhism">Sikhism</option>
+                <option value="Spiritism">Spiritism</option>
+                <option value="Tenrikyo">Tenrikyo</option>
+                <option value="Unitarian Universalism">
+                  Unitarian Universalism
+                </option>
+                <option value="Zoroastrianism">Zoroastrianism</option>
+                <option value="Primal Indigenous">Primal Indigenous</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
             <div className="form-group required">
               <div className="row">
                 <div className="col">
                   <label className="form-label" htmlFor="smoke">
-                    How often do you smoke/use drugs:
+                    How often do you smoke/vape/use drugs:
                   </label>
                   <select
                     className="form-select smoke"
@@ -658,6 +722,11 @@ function CreateProfile(props) {
                     name="smoke"
                     required
                   >
+                    <option
+                      value=""
+                      selected="selected"
+                      disabled="disabled"
+                    ></option>
                     <option value={1}>Never</option>
                     <option value={2}>Rarely</option>
                     <option value={3}>Sometimes</option>
@@ -674,6 +743,11 @@ function CreateProfile(props) {
                     name="drink"
                     required
                   >
+                    <option
+                      value=""
+                      selected="selected"
+                      disabled="disabled"
+                    ></option>
                     <option value={1}>Never</option>
                     <option value={2}>Rarely</option>
                     <option value={3}>Sometimes</option>

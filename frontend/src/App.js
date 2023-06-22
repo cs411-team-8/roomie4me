@@ -92,7 +92,7 @@ function App() {
         {user && requests && requests.length < 7 && (
           <Route
             path="/createRequest"
-            element={<CreateRequest user={user} requests={requests} />}
+            element={<CreateRequest requests={requests} />}
           />
         )}
 
@@ -102,9 +102,7 @@ function App() {
 
         {!user && <Route path="/createRequest" element={<NotLoggedIn />} />}
 
-        {user && (
-          <Route path="/viewRequests" element={<ViewRequests user={user} />} />
-        )}
+        {user && <Route path="/viewRequests" element={<ViewRequests />} />}
 
         {!user && <Route path="/viewRequests" element={<NotLoggedIn />} />}
 

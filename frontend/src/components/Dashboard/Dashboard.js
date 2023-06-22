@@ -68,7 +68,7 @@ function Dashboard(props) {
             <button
               className="btn btn-primary"
               type="button"
-              style={{ background: "#910909", borderColor: "#910909" }}
+              style={{ background: "#191e50", borderColor: "#191e50" }}
               onClick={handleSignOut}
             >
               Sign Out

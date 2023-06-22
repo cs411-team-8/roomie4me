@@ -36,6 +36,17 @@ function CreateRequest(props) {
       ? document.querySelector(".residence").value
       : null;
     const expiry = document.querySelector(".expiry").value;
+    const similarAge = document.querySelector(".similarAge").value;
+    const similarReligion = document.querySelector(".similarReligion").value;
+    const similarCountry = document.querySelector(".similarCountry").value;
+    const similarDrugIntake =
+      document.querySelector(".similarDrugIntake").value;
+    const similarAlcoholIntake = document.querySelector(
+      ".similarAlcoholIntake"
+    ).value;
+    const similarSleepSchedule = document.querySelector(
+      ".similarSleepSchedule"
+    ).value;
 
     console.log(onCampus);
 
@@ -56,6 +67,14 @@ function CreateRequest(props) {
           desiredResidence: residence,
         },
         expiry: expiry,
+        preferences: {
+          similarAge: similarAge,
+          similarReligion: similarReligion,
+          similarCountry: similarCountry,
+          similarDrugIntake: similarDrugIntake,
+          similarAlcoholIntake: similarAlcoholIntake,
+          similarSleepSchedule: similarSleepSchedule,
+        },
         currentStatus: "open",
       }),
     };
@@ -101,8 +120,8 @@ function CreateRequest(props) {
                     marginRight: "0px",
                   }}
                 >
-                  Hi, {props.user.name.firstName}! Please fill out the following
-                  form to create a new roomie request.
+                  Please fill out the following form to create a new roomie
+                  request.
                 </h2>
               </div>
               <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center"></div>
@@ -112,7 +131,7 @@ function CreateRequest(props) {
                 <button
                   className="btn btn-primary"
                   type="button"
-                  style={{ background: "#074d5d", borderColor: "#074d5d" }}
+                  style={{ background: "#191e50", borderColor: "#191e50" }}
                   onClick={handleDashboard}
                 >
                   Go Back to My Dashboard
@@ -131,8 +150,21 @@ function CreateRequest(props) {
           >
             <section>
               <form onSubmit={handleSubmit}>
+                {/* <div
+                  className="card clickable-card"
+                  style={{
+                    background: "#074d5d",
+                    borderColor: "#074d5d",
+                    marginBottom: "25px",
+                  }}
+                >
+                  <div className="card-body"> */}
                 <div className="form-group required">
-                  <label className="form-label" htmlFor="semester">
+                  <label
+                    className="form-label"
+                    htmlFor="semester"
+                    style={{ color: "#ffffff" }}
+                  >
                     Target Semester:
                   </label>
                   <select
@@ -145,6 +177,11 @@ function CreateRequest(props) {
                     name="semester"
                     required
                   >
+                    <option
+                      value=""
+                      selected="selected"
+                      disabled="disabled"
+                    ></option>
                     {!props.requests.some(
                       (request) => request.targetSemester === "Summer 1 2023"
                     ) && <option value="Summer 1 2023">Summer 1 2023</option>}
@@ -175,7 +212,11 @@ function CreateRequest(props) {
                   </select>
                 </div>
                 <div className="form-group required">
-                  <label className="form-label" htmlFor="numRoomies">
+                  <label
+                    className="form-label"
+                    htmlFor="numRoomies"
+                    style={{ color: "#ffffff" }}
+                  >
                     Number of Roomies:
                   </label>
                   <input
@@ -197,7 +238,11 @@ function CreateRequest(props) {
                 <div className="form-group required">
                   <div className="row">
                     <div className="col">
-                      <label className="form-label" htmlFor="onCampus">
+                      <label
+                        className="form-label"
+                        htmlFor="onCampus"
+                        style={{ color: "#ffffff" }}
+                      >
                         On Campus:
                       </label>
                       <select
@@ -210,6 +255,11 @@ function CreateRequest(props) {
                         name="onCampus"
                         required
                       >
+                        <option
+                          value=""
+                          selected="selected"
+                          disabled="disabled"
+                        ></option>
                         <option value={true}>
                           I want to/already live on campus
                         </option>
@@ -220,7 +270,11 @@ function CreateRequest(props) {
                       </select>
                     </div>
                     <div className="col">
-                      <label className="form-label" htmlFor="currentHousing">
+                      <label
+                        className="form-label"
+                        htmlFor="currentHousing"
+                        style={{ color: "#ffffff" }}
+                      >
                         Current Housing:
                       </label>
                       <select
@@ -234,6 +288,11 @@ function CreateRequest(props) {
                         onChange={handleCurrentHousingChange}
                         required
                       >
+                        <option
+                          value=""
+                          selected="selected"
+                          disabled="disabled"
+                        ></option>
                         <option value={false}>I don't have housing</option>
                         <option value={true}>I already have housing</option>
                       </select>
@@ -242,7 +301,11 @@ function CreateRequest(props) {
                 </div>
                 {currentHousing && (
                   <div className="form-group required">
-                    <label className="form-label" htmlFor="address">
+                    <label
+                      className="form-label"
+                      htmlFor="address"
+                      style={{ color: "#ffffff" }}
+                    >
                       Current Housing Address:
                     </label>
                     <input
@@ -256,7 +319,11 @@ function CreateRequest(props) {
                 )}
                 {!currentHousing && (
                   <div className="form-group required">
-                    <label className="form-label" htmlFor="residence">
+                    <label
+                      className="form-label"
+                      htmlFor="residence"
+                      style={{ color: "#ffffff" }}
+                    >
                       Desired Residence
                     </label>
                     <input
@@ -269,7 +336,11 @@ function CreateRequest(props) {
                   </div>
                 )}
                 <div className="form-group required">
-                  <label className="form-label" htmlFor="expiry">
+                  <label
+                    className="form-label"
+                    htmlFor="expiry"
+                    style={{ color: "#ffffff" }}
+                  >
                     Request Deadline:
                   </label>
                   <input
@@ -278,12 +349,174 @@ function CreateRequest(props) {
                     name="expiry"
                     style={{
                       marginTop: "-7px",
-                      marginBottom: "7px",
+                      marginBottom: "25px",
                       height: "38px",
                       borderRadius: "6px",
                     }}
                     required
                   />
+                </div>
+                {/* </div>
+                </div>
+                <div
+                  className="card clickable-card"
+                  style={{
+                    background: "#074d5d",
+                    borderColor: "#074d5d",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <div className="card-body"> */}
+                <h5 style={{ color: "#ffffff" }}>
+                  On a scale of 1 (not important) to 5 (very important), how
+                  important is similarity in these categories to your potential
+                  roomie(s):
+                </h5>
+                <div className="form-group required">
+                  <div className="row">
+                    <div className="col">
+                      <label
+                        className="form-label"
+                        htmlFor="similarAge"
+                        style={{ color: "#ffffff" }}
+                      >
+                        Age:
+                      </label>
+                      <input
+                        className="form-control form-control-sm similarAge"
+                        type="number"
+                        name="similarAge"
+                        style={{
+                          marginTop: "-7px",
+                          marginBottom: "7px",
+                          height: "38px",
+                          borderRadius: "6px",
+                        }}
+                        min={1}
+                        max={5}
+                        required
+                      />
+                    </div>
+                    <div className="col">
+                      <label
+                        className="form-label"
+                        htmlFor="similarReligion"
+                        style={{ color: "#ffffff" }}
+                      >
+                        Religion:
+                      </label>
+                      <input
+                        className="form-control form-control-sm similarReligion"
+                        type="number"
+                        name="similarReligion"
+                        style={{
+                          marginTop: "-7px",
+                          marginBottom: "7px",
+                          height: "38px",
+                          borderRadius: "6px",
+                        }}
+                        min={1}
+                        max={5}
+                        required
+                      />
+                    </div>
+                    <div className="col">
+                      <label
+                        className="form-label"
+                        htmlFor="similarCountry"
+                        style={{ color: "#ffffff" }}
+                      >
+                        Country:
+                      </label>
+                      <input
+                        className="form-control form-control-sm similarCountry"
+                        type="number"
+                        name="similarCountry"
+                        style={{
+                          marginTop: "-7px",
+                          marginBottom: "7px",
+                          height: "38px",
+                          borderRadius: "6px",
+                        }}
+                        min={1}
+                        max={5}
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <label
+                        className="form-label"
+                        htmlFor="similarDrugIntake"
+                        style={{ color: "#ffffff" }}
+                      >
+                        Smoking/Drug Intake:
+                      </label>
+                      <input
+                        className="form-control form-control-sm similarDrugIntake"
+                        type="number"
+                        name="similarDrugIntake"
+                        style={{
+                          marginTop: "-7px",
+                          marginBottom: "7px",
+                          height: "38px",
+                          borderRadius: "6px",
+                        }}
+                        min={1}
+                        max={5}
+                        required
+                      />
+                    </div>
+                    <div className="col">
+                      <label
+                        className="form-label"
+                        htmlFor="similarAlcoholIntake"
+                        style={{ color: "#ffffff" }}
+                      >
+                        Alcohol Intake:
+                      </label>
+                      <input
+                        className="form-control form-control-sm similarAlcoholIntake"
+                        type="number"
+                        name="similarAlcoholIntake"
+                        style={{
+                          marginTop: "-7px",
+                          marginBottom: "7px",
+                          height: "38px",
+                          borderRadius: "6px",
+                        }}
+                        min={1}
+                        max={5}
+                        required
+                      />
+                    </div>
+                    <div className="col">
+                      <label
+                        className="form-label"
+                        htmlFor="similarSleepSchedule"
+                        style={{ color: "#ffffff" }}
+                      >
+                        Sleep Schedule:
+                      </label>
+                      <input
+                        className="form-control form-control-sm similarSleepSchedule"
+                        type="number"
+                        name="similarSleepSchedule"
+                        style={{
+                          marginTop: "-7px",
+                          marginBottom: "7px",
+                          height: "38px",
+                          borderRadius: "6px",
+                        }}
+                        min={1}
+                        max={5}
+                        required
+                      />
+                    </div>
+                  </div>
+                  {/* </div>
+                  </div> */}
                 </div>
                 <div style={{ textAlign: "center" }}>
                   <input

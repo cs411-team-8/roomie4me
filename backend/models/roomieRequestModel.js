@@ -59,7 +59,7 @@ const RoomieRequestSchema = new Schema(
         required: false,
         default: 3,
       },
-      similarInternationalStatus: {
+      similarCountry: {
         type: Number,
         required: false,
         default: 3,
@@ -70,6 +70,11 @@ const RoomieRequestSchema = new Schema(
         default: 3,
       },
       similarDrugIntake: {
+        type: Number,
+        required: false,
+        default: 3,
+      },
+      similarAlcoholIntake: {
         type: Number,
         required: false,
         default: 3,
