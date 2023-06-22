@@ -96,7 +96,25 @@ const myInfo = async (req, res, user) => {
 };
 
 const getUser = async (req, res, user) => {
-  //res.json(user)
+  let userid = req.query["userid"];
+  let variables = {
+    userid: userid,
+  };
+
+  for (let [key, value] of Object.entries(variables)) {
+    console.log(key + " // " + value);
+    if (value === undefined) {
+      res.json({
+        error: "The parameter '" + key + "' was not set!",
+      });
+      return;
+    }
+  }
+  User.findOne({
+    openid: userid,
+  }).then((user) => {
+    res.json(user);
+  });
 };
 
 module.exports = { login, deleteUser, updateUser, getUser, myInfo };
