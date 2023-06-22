@@ -13,6 +13,10 @@ const UserSchema = new Schema(
       required: true,
       unique: true,
     },
+    phone: {
+      type: String,
+      required: true,
+    },
     registered: {
       type: Boolean,
       required: true,
