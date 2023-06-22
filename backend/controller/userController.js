@@ -3,7 +3,7 @@ const { google } = require("googleapis");
 const jwt = require("jsonwebtoken");
 const OAuth = require("../utils/OAuth");
 const oAuth = require("../utils/OAuth");
-const NodeMailer = require("../utils/nodeMailer")
+const NodeMailer = require("../utils/nodeMailer");
 
 // this is NOT a rest api route
 /**
@@ -55,13 +55,13 @@ const login = async (req, res) => {
         },
         process.env.SECRET_ENCRYPTION_KEY,
         {
-          expiresIn: 2592000,
+          expiresIn: 2592000000,
         }
       );
 
       // set cookie
       res.cookie("access-token", apiToken, {
-        maxAge: 2592000,
+        maxAge: 2592000000,
         httpOnly: false,
       });
 
@@ -77,7 +77,7 @@ const login = async (req, res) => {
 };
 
 const deleteUser = async (req, res, user) => {
-    //todo
+  //todo
 };
 
 const updateUser = async (req, res, user) => {
@@ -99,4 +99,4 @@ const getUser = async (req, res, user) => {
   //res.json(user)
 };
 
-module.exports = { login, deleteUser, updateUser, getUser, myInfo};
+module.exports = { login, deleteUser, updateUser, getUser, myInfo };
