@@ -74,14 +74,15 @@ const updateRequest = async (req, res, user) => {
  * @returns {Promise<RoomieRequest>}
  */
 const getRequest = async (req, res, user) => {
-  let authorId = req.body["authorId"];
-  let targetSemester = req.body["targetSemester"];
+  let authorId = req.query["authorId"];
+  let targetSemester = req.query["targetSemester"];
 
   // make sure all parameters were set
   let variables = {
     authorId: authorId,
     targetSemester: targetSemester,
   };
+
   for (let [key, value] of Object.entries(variables)) {
     console.log(key + " // " + value);
     if (value === undefined) {
