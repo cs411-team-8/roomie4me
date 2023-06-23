@@ -22,34 +22,34 @@ function ViewRequests() {
 
   const [requests, setRequests] = useState([]);
   useEffect(() => {
+    const test = async () => {
+      if (document.cookie) {
+        const accessToken = document.cookie.split("access-token=")[1];
+        const baseUrl = "http://localhost:8082";
+        const endpoint = "/api/v1/roomie/requests";
+
+        const queryParams = new URLSearchParams();
+        queryParams.append("page-number", 0);
+        queryParams.append("batch-size", 25);
+        queryParams.append("sort-mode", "creation");
+
+        const url = baseUrl + endpoint + "?" + queryParams.toString();
+
+        const options = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        const response = await fetch(url, options);
+        const data = await response.json();
+        setRequests(data);
+      }
+    };
     try {
-      const test = async () => {
-        if (document.cookie) {
-          const accessToken = document.cookie.split("access-token=")[1];
-          const baseUrl = "http://localhost:8082";
-          const endpoint = "/api/v1/roomie/requests";
-
-          const queryParams = new URLSearchParams();
-          queryParams.append("page-number", 0);
-          queryParams.append("batch-size", 25);
-          queryParams.append("sort-mode", "creation");
-
-          const url = baseUrl + endpoint + "?" + queryParams.toString();
-
-          const options = {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          };
-
-          const response = await fetch(url, options);
-          const data = await response.json();
-          setRequests(data);
-        }
-      };
       test();
     } catch (error) {
       console.log(error);
@@ -144,10 +144,7 @@ function ViewRequests() {
                           marginBottom: "0px",
                         }}
                       >
-                        {"Class of " +
-                          request.targetSemester.substring(
-                            request.targetSemester.length - 4
-                          )}
+                        Pakistan
                       </p>
                       <p
                         style={{
@@ -155,7 +152,7 @@ function ViewRequests() {
                           marginBottom: "0px",
                         }}
                       >
-                        Pakistan
+                        {request.targetSemester}
                       </p>
                       {request.housingInfo.onCampus !== null && (
                         <p

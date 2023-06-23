@@ -3,27 +3,28 @@ import Footer from "../Footer";
 
 function DetailedRequest() {
   const [timer, setTimer] = useState(false);
-
+  const [user, setUser] = useState();
   const [request, setRequest] = useState([]);
   useEffect(() => {
-    const test = async (event) => {
+    const test = async () => {
       if (document.cookie) {
         const accessToken = document.cookie.split("access-token=")[1];
         const baseUrl = "http://localhost:8082";
-        const endpoint = "/api/v1/roomie/request";
+        const requestEndpoint = "/api/v1/roomie/request";
         const decodedString = decodeURIComponent(
           window.location.pathname.split("/request/")[1]
         );
         const authorId = decodedString.split("/")[0];
         const semester = decodedString.split("/")[1];
         console.log(authorId, semester);
-        const queryParams = new URLSearchParams();
-        queryParams.append("authorId", authorId);
-        queryParams.append("targetSemester", semester);
+        const requestQueryParams = new URLSearchParams();
+        requestQueryParams.append("authorId", authorId);
+        requestQueryParams.append("targetSemester", semester);
 
-        const url = baseUrl + endpoint + "?" + queryParams.toString();
+        const requestUrl =
+          baseUrl + requestEndpoint + "?" + requestQueryParams.toString();
 
-        const options = {
+        const requestOptions = {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -32,10 +33,31 @@ function DetailedRequest() {
           },
         };
 
-        const response = await fetch(url, options);
-        const data = await response.json();
-        console.log(data);
-        setRequest(data);
+        const requestResponse = await fetch(requestUrl, requestOptions);
+        const requestData = await requestResponse.json();
+        console.log(requestData);
+        setRequest(requestData);
+
+        const userEndpoint = "/api/v1/user/find";
+        const userQueryParams = new URLSearchParams();
+        userQueryParams.append("userid", authorId);
+
+        const userUrl =
+          baseUrl + userEndpoint + "?" + userQueryParams.toString();
+
+        const userOptions = {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        };
+
+        const userResponse = await fetch(userUrl, userOptions);
+        const userData = await userResponse.json();
+        console.log(userData);
+        setUser(userData);
       }
     };
 
@@ -55,6 +77,65 @@ function DetailedRequest() {
   const handleBack = () => {
     window.location.href = "/viewRequests";
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const url = "http://localhost:8082" + "/api/v1/roomie/respond";
+    const accessToken = document.cookie.split("access-token=")[1];
+    const message = document.querySelector(".message").value;
+
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        targetSemester: request.targetSemester,
+        message: message,
+      }),
+    };
+
+    const response = await fetch(url, options);
+    console.log(response);
+    if (response.status === 200) {
+      window.location.href = "/dashboard";
+      alert("Your request to connect has been sent.");
+    }
+  };
+
+  const months = {
+    "01": "January",
+    "02": "February",
+    "03": "March",
+    "04": "April",
+    "05": "May",
+    "06": "June",
+    "07": "July",
+    "08": "August",
+    "09": "September",
+    10: "October",
+    11: "November",
+    12: "December",
+  };
+
+  const drugs = {
+    1: 25 / 2,
+    2: (25 + 50) / 2,
+    3: (50 + 75) / 2,
+    4: (75 + 100) / 2,
+  };
+
+  const preferences = {
+    1: 4,
+    2: 25,
+    3: 50,
+    4: 75,
+    5: 100,
+  };
+
+  const numToOption = ["", "Never", "Rarely", "Sometimes", "Often"];
 
   return (
     <div>
@@ -90,7 +171,9 @@ function DetailedRequest() {
                       marginRight: "0px",
                     }}
                   >
-                    You are viewing Munir's roomie request
+                    {"You are viewing " +
+                      user.name.firstName +
+                      "'s roomie request"}
                   </h2>
                 </div>
                 <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center" />
@@ -163,7 +246,7 @@ function DetailedRequest() {
                             style={{ background: "#074d5d" }}
                           >
                             <p style={{ color: "rgb(255,255,255)" }}>
-                              Muhammad Aseef
+                              {user.name.firstName}
                             </p>
                           </div>
                         </div>
@@ -189,7 +272,7 @@ function DetailedRequest() {
                               className="text-start"
                               style={{ color: "rgb(255,255,255)" }}
                             >
-                              Imran
+                              {user.name.lastName}
                             </p>
                           </div>
                         </div>
@@ -209,7 +292,7 @@ function DetailedRequest() {
                             style={{ background: "#074d5d" }}
                           >
                             <p style={{ color: "rgb(255,255,255)" }}>
-                              aseef@bu.edu
+                              {user.email}
                             </p>
                           </div>
                         </div>
@@ -235,7 +318,10 @@ function DetailedRequest() {
                               className="text-start"
                               style={{ color: "rgb(255,255,255)" }}
                             >
-                              20
+                              {Math.floor(
+                                (new Date() - new Date(user.dob).getTime()) /
+                                  3.15576e10
+                              )}
                             </p>
                           </div>
                         </div>
@@ -256,7 +342,10 @@ function DetailedRequest() {
                             className="col d-md-flex"
                             style={{ background: "#074d5d" }}
                           >
-                            <p style={{ color: "rgb(255,255,255)" }}>Male</p>
+                            <p style={{ color: "rgb(255,255,255)" }}>
+                              {user.gender[0].toUpperCase() +
+                                user.gender.substring(1)}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -281,7 +370,15 @@ function DetailedRequest() {
                               className="text-start"
                               style={{ color: "rgb(255,255,255)" }}
                             >
-                              May 2025
+                              {`${
+                                months[
+                                  user.degreeProgram.graduation
+                                    .toString()
+                                    .substring(5, 7)
+                                ]
+                              } ${user.degreeProgram.graduation
+                                .toString()
+                                .substring(0, 4)}`}
                             </p>
                           </div>
                         </div>
@@ -302,7 +399,9 @@ function DetailedRequest() {
                             className="col d-md-flex"
                             style={{ background: "#074d5d" }}
                           >
-                            <p style={{ color: "rgb(255,255,255)" }}>Islam</p>
+                            <p style={{ color: "rgb(255,255,255)" }}>
+                              {user.religiousAffiliation}
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -327,7 +426,7 @@ function DetailedRequest() {
                               className="text-start"
                               style={{ color: "rgb(255,255,255)" }}
                             >
-                              United States
+                              {user.internationalStatus.country}
                             </p>
                           </div>
                         </div>
@@ -338,7 +437,7 @@ function DetailedRequest() {
               </div>
               <div>
                 <div
-                  className="card clickable-card"
+                  className="card"
                   style={{
                     background: "#074d5d",
                     marginBottom: "25px",
@@ -368,19 +467,7 @@ function DetailedRequest() {
                       </svg>
                       &nbsp; About Me
                     </h3>
-                    <p style={{ color: "#ffffff" }}>
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Duis ut diam quam nulla porttitor massa id neque.
-                      Egestas fringilla phasellus faucibus scelerisque. Tellus
-                      integer feugiat scelerisque varius morbi. Turpis massa sed
-                      elementum tempus egestas sed sed. Elementum nibh tellus
-                      molestie nunc non. Eget magna fermentum iaculis eu.
-                      Pulvinar mattis nunc sed blandit libero volutpat sed cras.
-                      Eu feugiat pretium nibh ipsum consequat nisl. Viverra
-                      adipiscing at in tellus integer feugiat scelerisque varius
-                      morbi.
-                    </p>
+                    <p style={{ color: "#ffffff" }}>{user.aboutMe}</p>
                   </div>
                 </div>
               </div>
@@ -388,7 +475,7 @@ function DetailedRequest() {
                 <div className="row">
                   <div className="col">
                     <div
-                      className="card clickable-card"
+                      className="card"
                       style={{
                         background: "#074d5d",
                         marginBottom: "25px",
@@ -426,7 +513,7 @@ function DetailedRequest() {
                               className="d-inline-flex"
                               style={{ color: "#ffffff" }}
                             >
-                              Semester
+                              Semester:
                             </h6>
                             <p
                               className="d-inline-flex"
@@ -442,7 +529,7 @@ function DetailedRequest() {
                               className="d-inline-flex"
                               style={{ color: "#ffffff" }}
                             >
-                              Number of Roomies
+                              Number of Roomies:
                             </h6>
                             <p
                               className="d-inline-flex"
@@ -458,13 +545,17 @@ function DetailedRequest() {
                               className="d-inline-flex"
                               style={{ color: "#ffffff" }}
                             >
-                              On Campus
+                              On Campus:
                             </h6>
                             <p
                               className="d-inline-flex"
                               style={{ marginLeft: "14px", color: "#ffffff" }}
                             >
-                              Yes/No/Indifferent
+                              {request.housingInfo.onCampus === null
+                                ? "Indifferent"
+                                : request.housingInfo.onCampus === true
+                                ? "Yes"
+                                : "No"}
                             </p>
                           </div>
                         </div>
@@ -474,13 +565,15 @@ function DetailedRequest() {
                               className="d-inline-flex"
                               style={{ color: "#ffffff" }}
                             >
-                              Already Has Housing
+                              Already Has Housing:
                             </h6>
                             <p
                               className="d-inline-flex"
                               style={{ marginLeft: "14px", color: "#ffffff" }}
                             >
-                              No/Yes
+                              {request.housingInfo.hasHousing === true
+                                ? "Yes"
+                                : "No"}
                             </p>
                           </div>
                         </div>
@@ -496,7 +589,9 @@ function DetailedRequest() {
                               className="d-inline-flex"
                               style={{ marginLeft: "14px", color: "#ffffff" }}
                             >
-                              Kilachand Hall/N/A
+                              {request.housingInfo.address === null
+                                ? request.housingInfo.desiredResidence
+                                : "N/A"}
                             </p>
                           </div>
                         </div>
@@ -505,13 +600,13 @@ function DetailedRequest() {
                   </div>
                   <div className="col">
                     <div
-                      className="card clickable-card"
+                      className="card"
                       style={{
                         background: "#074d5d",
                         marginBottom: "25px",
                         borderColor: "#074d5d",
-                        "-bsPrimary": "#074d5d",
-                        "-bsPrimaryRgb": "7,77,93",
+                        BsPrimary: "#074d5d",
+                        BsPrimaryRgb: "7,77,93",
                       }}
                     >
                       <div className="card-body">
@@ -526,9 +621,67 @@ function DetailedRequest() {
                           <div className="col">
                             <h5 style={{ color: "#ffffff" }}>Weekday</h5>
                             <h6 style={{ color: "#ffffff" }}>Bedtime</h6>
-                            <p style={{ color: "#ffffff" }}>10:00 PM</p>
+                            <p style={{ color: "#ffffff" }}>
+                              {parseInt(
+                                user.weeklySleepSchedule.weekdays.bedtime.substring(
+                                  0,
+                                  2
+                                )
+                              ) >= 12
+                                ? `${
+                                    parseInt(
+                                      user.weeklySleepSchedule.weekdays.bedtime.substring(
+                                        0,
+                                        2
+                                      )
+                                    ) % 12 || 12
+                                  }:${user.weeklySleepSchedule.weekdays.bedtime.substring(
+                                    3,
+                                    5
+                                  )} PM`
+                                : `${
+                                    parseInt(
+                                      user.weeklySleepSchedule.weekdays.bedtime.substring(
+                                        0,
+                                        2
+                                      )
+                                    ) % 12 || 12
+                                  }:${user.weeklySleepSchedule.weekdays.bedtime.substring(
+                                    3,
+                                    5
+                                  )} AM`}
+                            </p>
                             <h6 style={{ color: "#ffffff" }}>Wake Up Time</h6>
-                            <p style={{ color: "#ffffff" }}>06:00 AM</p>
+                            <p style={{ color: "#ffffff" }}>
+                              {parseInt(
+                                user.weeklySleepSchedule.weekdays.waketime.substring(
+                                  0,
+                                  2
+                                )
+                              ) >= 12
+                                ? `${
+                                    parseInt(
+                                      user.weeklySleepSchedule.weekdays.waketime.substring(
+                                        0,
+                                        2
+                                      )
+                                    ) % 12 || 12
+                                  }:${user.weeklySleepSchedule.weekdays.waketime.substring(
+                                    3,
+                                    5
+                                  )} PM`
+                                : `${
+                                    parseInt(
+                                      user.weeklySleepSchedule.weekdays.waketime.substring(
+                                        0,
+                                        2
+                                      )
+                                    ) % 12 || 12
+                                  }:${user.weeklySleepSchedule.weekdays.waketime.substring(
+                                    3,
+                                    5
+                                  )} AM`}
+                            </p>
                           </div>
                           <div className="col">
                             <h5
@@ -547,7 +700,34 @@ function DetailedRequest() {
                               className="text-end"
                               style={{ color: "#ffffff" }}
                             >
-                              11:00 PM
+                              {parseInt(
+                                user.weeklySleepSchedule.weekends.bedtime.substring(
+                                  0,
+                                  2
+                                )
+                              ) >= 12
+                                ? `${
+                                    parseInt(
+                                      user.weeklySleepSchedule.weekends.bedtime.substring(
+                                        0,
+                                        2
+                                      )
+                                    ) % 12 || 12
+                                  }:${user.weeklySleepSchedule.weekends.bedtime.substring(
+                                    3,
+                                    5
+                                  )} PM`
+                                : `${
+                                    parseInt(
+                                      user.weeklySleepSchedule.weekends.bedtime.substring(
+                                        0,
+                                        2
+                                      )
+                                    ) % 12 || 12
+                                  }:${user.weeklySleepSchedule.weekends.bedtime.substring(
+                                    3,
+                                    5
+                                  )} AM`}
                             </p>
                             <h6
                               className="text-end"
@@ -559,7 +739,34 @@ function DetailedRequest() {
                               className="text-end"
                               style={{ color: "#ffffff" }}
                             >
-                              07:00 AM
+                              {parseInt(
+                                user.weeklySleepSchedule.weekends.waketime.substring(
+                                  0,
+                                  2
+                                )
+                              ) >= 12
+                                ? `${
+                                    parseInt(
+                                      user.weeklySleepSchedule.weekends.waketime.substring(
+                                        0,
+                                        2
+                                      )
+                                    ) % 12 || 12
+                                  }:${user.weeklySleepSchedule.weekends.waketime.substring(
+                                    3,
+                                    5
+                                  )} PM`
+                                : `${
+                                    parseInt(
+                                      user.weeklySleepSchedule.weekends.waketime.substring(
+                                        0,
+                                        2
+                                      )
+                                    ) % 12 || 12
+                                  }:${user.weeklySleepSchedule.weekends.waketime.substring(
+                                    3,
+                                    5
+                                  )} AM`}
                             </p>
                           </div>
                         </div>
@@ -570,7 +777,7 @@ function DetailedRequest() {
               </div>
               <div>
                 <div
-                  className="card clickable-card"
+                  className="card"
                   style={{
                     background: "#074d5d",
                     marginBottom: "25px",
@@ -593,18 +800,18 @@ function DetailedRequest() {
                         <div
                           className="progress"
                           style={{
-                            "-bsPrimary": "#191e50",
+                            BsPrimary: "#191e50",
                             marginBottom: "15px",
                           }}
                         >
                           <div
                             className="progress-bar bg-primary"
-                            aria-valuenow={40}
+                            aria-valuenow={drugs[user.drugs.smoking]}
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            style={{ width: "40%" }}
+                            style={{ width: `${drugs[user.drugs.smoking]}%` }}
                           >
-                            40%
+                            {numToOption[user.drugs.smoking]}
                           </div>
                         </div>
                       </div>
@@ -617,12 +824,12 @@ function DetailedRequest() {
                         <div className="progress">
                           <div
                             className="progress-bar bg-primary"
-                            aria-valuenow={15}
+                            aria-valuenow={drugs[user.drugs.alcohol]}
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            style={{ width: "15%" }}
+                            style={{ width: `${drugs[user.drugs.smoking]}%` }}
                           >
-                            15%
+                            {numToOption[user.drugs.alcohol]}
                           </div>
                         </div>
                       </div>
@@ -632,7 +839,7 @@ function DetailedRequest() {
               </div>
               <div>
                 <div
-                  className="card clickable-card"
+                  className="card"
                   style={{
                     background: "#074d5d",
                     borderColor: "#074d5d",
@@ -673,13 +880,17 @@ function DetailedRequest() {
                         >
                           <div
                             className="progress-bar bg-primary"
-                            aria-valuenow={40}
+                            aria-valuenow={
+                              preferences[request.preferences.similarAge]
+                            }
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            style={{ width: "40%" }}
-                          >
-                            <span className="visually-hidden">40%</span>
-                          </div>
+                            style={{
+                              width: `${
+                                preferences[request.preferences.similarAge]
+                              }%`,
+                            }}
+                          ></div>
                         </div>
                         <div
                           className="row"
@@ -734,13 +945,17 @@ function DetailedRequest() {
                         >
                           <div
                             className="progress-bar bg-primary"
-                            aria-valuenow={40}
+                            aria-valuenow={
+                              preferences[request.preferences.similarReligion]
+                            }
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            style={{ width: "40%" }}
-                          >
-                            <span className="visually-hidden">40%</span>
-                          </div>
+                            style={{
+                              width: `${
+                                preferences[request.preferences.similarReligion]
+                              }%`,
+                            }}
+                          ></div>
                         </div>
                         <div
                           className="row"
@@ -795,13 +1010,17 @@ function DetailedRequest() {
                         >
                           <div
                             className="progress-bar bg-primary"
-                            aria-valuenow={40}
+                            aria-valuenow={
+                              preferences[request.preferences.similarCountry]
+                            }
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            style={{ width: "40%" }}
-                          >
-                            <span className="visually-hidden">40%</span>
-                          </div>
+                            style={{
+                              width: `${
+                                preferences[request.preferences.similarCountry]
+                              }%`,
+                            }}
+                          ></div>
                         </div>
                         <div
                           className="row"
@@ -856,13 +1075,19 @@ function DetailedRequest() {
                         >
                           <div
                             className="progress-bar bg-primary"
-                            aria-valuenow={40}
+                            aria-valuenow={
+                              preferences[request.preferences.similarDrugIntake]
+                            }
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            style={{ width: "40%" }}
-                          >
-                            <span className="visually-hidden">40%</span>
-                          </div>
+                            style={{
+                              width: `${
+                                preferences[
+                                  request.preferences.similarDrugIntake
+                                ]
+                              }%`,
+                            }}
+                          ></div>
                         </div>
                         <div
                           className="row"
@@ -917,13 +1142,21 @@ function DetailedRequest() {
                         >
                           <div
                             className="progress-bar bg-primary"
-                            aria-valuenow={40}
+                            aria-valuenow={
+                              preferences[
+                                request.preferences.similarAlcoholIntake
+                              ]
+                            }
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            style={{ width: "40%" }}
-                          >
-                            <span className="visually-hidden">40%</span>
-                          </div>
+                            style={{
+                              width: `${
+                                preferences[
+                                  request.preferences.similarAlcoholIntake
+                                ]
+                              }%`,
+                            }}
+                          ></div>
                         </div>
                         <div
                           className="row"
@@ -978,13 +1211,21 @@ function DetailedRequest() {
                         >
                           <div
                             className="progress-bar bg-primary"
-                            aria-valuenow={40}
+                            aria-valuenow={
+                              preferences[
+                                request.preferences.similarSleepSchedule
+                              ]
+                            }
                             aria-valuemin={0}
                             aria-valuemax={100}
-                            style={{ width: "40%" }}
-                          >
-                            <span className="visually-hidden">40%</span>
-                          </div>
+                            style={{
+                              width: `${
+                                preferences[
+                                  request.preferences.similarSleepSchedule
+                                ]
+                              }%`,
+                            }}
+                          ></div>
                         </div>
                         <div className="row" style={{ textAlign: "center" }}>
                           <div className="col">
@@ -1028,7 +1269,7 @@ function DetailedRequest() {
               </div>
               <form>
                 <div
-                  className="card clickable-card"
+                  className="card"
                   style={{
                     background: "#074d5d",
                     borderColor: "#074d5d",
@@ -1049,43 +1290,44 @@ function DetailedRequest() {
                       </svg>
                       &nbsp; Request to Connect
                     </h3>
-                    <div className="form-group required">
-                      <label
-                        className="form-label"
-                        htmlFor="message"
-                        style={{ color: "rgb(255,255,255)" }}
-                      >
-                        Message:
-                      </label>
-                      <textarea
-                        className="form-control"
-                        style={{
-                          height: "100px",
-                          marginTop: "-7px",
-                          marginBottom: "7px",
-                        }}
-                        name="message"
-                        placeholder="Please enter a message for Munir"
-                        required
-                        defaultValue={""}
-                      />
-                    </div>
-                    <div style={{ textAlign: "center" }}>
-                      <input
-                        className="btn btn-primary"
-                        type="submit"
-                        name="connect"
-                        required
-                        style={{
-                          textAlign: "center",
-                          background: "#910909",
-                          marginTop: "25px",
-                          borderColor: "#910909",
-                          width: "200px",
-                          marginBottom: "20px",
-                        }}
-                      />
-                    </div>
+                    <form onSubmit={handleSubmit}>
+                      <div className="form-group required">
+                        <label
+                          className="form-label"
+                          htmlFor="message"
+                          style={{ color: "rgb(255,255,255)" }}
+                        >
+                          Message:
+                        </label>
+                        <textarea
+                          className="form-control message"
+                          style={{
+                            height: "100px",
+                            marginTop: "-7px",
+                            marginBottom: "7px",
+                          }}
+                          name="message"
+                          placeholder={`Please enter a message for ${user.name.firstName}`}
+                          required
+                        />
+                      </div>
+                      <div style={{ textAlign: "center" }}>
+                        <input
+                          className="btn btn-primary"
+                          type="submit"
+                          name="connect"
+                          required
+                          style={{
+                            textAlign: "center",
+                            background: "#910909",
+                            marginTop: "25px",
+                            borderColor: "#910909",
+                            width: "200px",
+                            marginBottom: "20px",
+                          }}
+                        />
+                      </div>
+                    </form>
                   </div>
                 </div>
               </form>

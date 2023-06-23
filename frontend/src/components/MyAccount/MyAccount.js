@@ -111,7 +111,8 @@ function MyAccount(props) {
                 marginRight: "0px",
               }}
             >
-              Submit the following form to update your profile
+              Edit the fields in the following form and submit it to update your
+              profile
             </h2>
           </div>
           <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center" />
