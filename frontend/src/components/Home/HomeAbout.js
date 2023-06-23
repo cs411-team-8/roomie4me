@@ -75,8 +75,8 @@ function HomeAbout() {
               <p>
                 We don't sell or market your data. We collect the bare minimum
                 data needed to provide our services. Potential roommates do not
-                recieve your contact information with out explicit concent. See
-                our <a href="/privacy">privacy policy</a> for more details.
+                receive your phone number without explicit consent. See our{" "}
+                <a href="/privacy">Privacy Policy</a> for more details.
               </p>
             </div>
           </div>
@@ -120,8 +120,8 @@ function HomeAbout() {
               <h4 className="text-white">Secure</h4>
               <p>
                 All site data is restricted to BU students. Outsiders do not
-                have access to this websites. This site is site for the students
-                by the students.
+                have access to this websites. This site is for the students by
+                the students.
               </p>
             </div>
           </div>

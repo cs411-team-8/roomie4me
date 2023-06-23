@@ -2,6 +2,10 @@ import React from "react";
 import Footer from "../Footer";
 
 function Dashboard(props) {
+  const handleHome = () => {
+    window.location.href = "/";
+  };
+
   const handleSignOut = () => {
     // Delete the "access-token" cookie by setting it to a time in the past
     document.cookie =
@@ -15,8 +19,37 @@ function Dashboard(props) {
     window.location.href = "/createRequest";
   };
 
-  const handleCard2 = () => {
-    window.location.href = "/viewRequests";
+  const handleCard2 = async () => {
+    if (document.cookie) {
+      const accessToken = document.cookie.split("access-token=")[1];
+      const baseUrl = "http://localhost:8082";
+      const endpoint = "/api/v1/roomie/requests";
+
+      const queryParams = new URLSearchParams();
+      queryParams.append("page-number", 0);
+      queryParams.append("batch-size", 25);
+      queryParams.append("sort-mode", "creation");
+
+      const url = baseUrl + endpoint + "?" + queryParams.toString();
+
+      const options = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      };
+
+      const response = await fetch(url, options);
+      const data = await response.json();
+      console.log(data);
+      if (data.length === 0) {
+        window.location.href = "/noRequests";
+      } else {
+        window.location.href = "/viewRequests";
+      }
+    }
   };
 
   const handleCard3 = () => {
@@ -40,12 +73,13 @@ function Dashboard(props) {
         <div className="row" style={{ marginTop: "33px" }}>
           <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center">
             <img
-              className="d-inline-flex d-md-flex justify-content-md-center"
+              className="d-inline-flex d-md-flex justify-content-md-center homeImg"
               src="assets/img/people.png"
               width={117}
               height={100}
               style={{ marginRight: "0px" }}
               alt="logo"
+              onClick={handleHome}
             />
           </div>
           <div className="col d-inline-flex justify-content-md-center align-items-md-center">

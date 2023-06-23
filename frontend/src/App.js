@@ -10,6 +10,9 @@ import DetailedRequest from "./components/ViewRequests/DetailedRequest";
 import MyAccount from "./components/MyAccount/MyAccount";
 import InDev from "./components/Errors/InDev";
 import NoRequests from "./components/ViewRequests/NoRequests";
+import TOS from "./components/TOS/TOS";
+import Privacy from "./components/PrivacyPolicy/Privacy";
+import Donate from "./components/Donate/Donate";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -105,7 +108,7 @@ function App() {
 
         {!user && <Route path="/createRequest" element={<NotLoggedIn />} />}
 
-        {user && <Route path="/viewRequests" element={<NoRequests />} />}
+        {user && <Route path="/viewRequests" element={<ViewRequests />} />}
 
         {!user && <Route path="/viewRequests" element={<NotLoggedIn />} />}
 
@@ -126,7 +129,22 @@ function App() {
           />
         )}
 
-        {!user && <Route path="/:semester" element={<NotLoggedIn />} />}
+        {!user && (
+          <Route
+            path="/request/:authorid/:semester"
+            element={<NotLoggedIn />}
+          />
+        )}
+
+        {user && <Route path="/noRequests" element={<NoRequests />} />}
+
+        {!user && <Route path="/noRequests" element={<NotLoggedIn />} />}
+
+        <Route path="/tos" element={<TOS />} />
+
+        <Route path="/privacy" element={<Privacy />} />
+
+        <Route path="/donate" element={<Donate />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

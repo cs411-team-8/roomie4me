@@ -1,6 +1,10 @@
 import { React, useState, useEffect } from "react";
 
 function NoRequests() {
+  const handleHome = () => {
+    window.location.href = "/";
+  };
+
   const [timer, setTimer] = useState(false);
 
   useEffect(() => {
@@ -28,12 +32,13 @@ function NoRequests() {
             <div className="row" style={{ marginTop: "0px" }}>
               <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center">
                 <img
-                  className="d-inline-flex d-md-flex justify-content-md-center"
+                  className="d-inline-flex d-md-flex justify-content-md-center homeImg"
                   src="/assets/img/people.png"
                   width={117}
                   height={100}
                   style={{ marginRight: "0px" }}
                   alt="logo"
+                  onClick={handleHome}
                 />
               </div>
               <div className="col d-inline-flex justify-content-md-center align-items-md-center">

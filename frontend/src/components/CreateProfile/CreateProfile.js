@@ -2,6 +2,9 @@ import Footer from "../Footer";
 // import { useEffect, useState } from "react";
 
 function CreateProfile(props) {
+  const handleHome = () => {
+    window.location.href = "/";
+  };
   // const [user, setUser] = useState();
   // let counter = 0;
   // useEffect(() => {
@@ -117,12 +120,13 @@ function CreateProfile(props) {
         <div className="row">
           <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center">
             <img
-              className="d-inline-flex d-md-flex justify-content-md-center"
+              className="d-inline-flex d-md-flex justify-content-md-center homeImg"
               src="assets/img/people.png"
               width={117}
               height={100}
               style={{ marginRight: "0px" }}
               alt="Logo"
+              onClick={handleHome}
             />
           </div>
           <div className="col d-inline-flex justify-content-md-center align-items-md-center">

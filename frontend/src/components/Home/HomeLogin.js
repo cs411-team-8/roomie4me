@@ -24,7 +24,7 @@ function HomeLogin() {
               marginTop: "13px",
             }}
           >
-            By registering for this site, you agree to our Terms of Use and
+            By registering for this site, you agree to our Terms of Service and
             Privacy Policy. Please note you must use a valid @bu.edu email in
             order to register for this site.
           </p>

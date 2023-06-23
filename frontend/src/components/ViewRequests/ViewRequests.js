@@ -16,6 +16,10 @@ function ViewRequests() {
     }, 50);
   }, []);
 
+  const handleHome = () => {
+    window.location.href = "/";
+  };
+
   const handleDashboard = () => {
     window.location.href = "/dashboard";
   };
@@ -70,12 +74,13 @@ function ViewRequests() {
             <div className="row" style={{ marginTop: "33px" }}>
               <div className="col-md-2 d-inline-flex d-md-flex justify-content-md-center align-items-md-center">
                 <img
-                  className="d-inline-flex d-md-flex justify-content-md-center"
+                  className="d-inline-flex d-md-flex justify-content-md-center homeImg"
                   src="assets/img/people.png"
                   width={117}
                   height={100}
                   style={{ marginRight: "0px" }}
                   alt="logo"
+                  onClick={handleHome}
                 />
               </div>
               <div className="col d-inline-flex justify-content-md-center align-items-md-center">

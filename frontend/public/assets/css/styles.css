@@ -25,6 +25,10 @@ input[type="number"] {
   cursor: pointer;
 }
 
+.homeImg {
+  cursor: pointer;
+}
+
 #notFound {
   top: 50%;
   left: 50%;
