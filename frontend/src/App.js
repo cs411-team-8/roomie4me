@@ -3,12 +3,13 @@ import Home from "./components/Home/Home";
 import Dashboard from "./components/Dashboard/Dashboard";
 import NotFound from "./components/Errors/NotFound";
 import CreateRequest from "./components/CreateRequest/CreateRequest";
-import RequestsFull from "./components/Errors/RequestsFull";
+import RequestsFull from "./components/CreateRequest/RequestsFull";
 import NotLoggedIn from "./components/Errors/NotLoggedIn";
 import ViewRequests from "./components/ViewRequests/ViewRequests";
 import DetailedRequest from "./components/ViewRequests/DetailedRequest";
 import MyAccount from "./components/MyAccount/MyAccount";
 import InDev from "./components/Errors/InDev";
+import NoRequests from "./components/ViewRequests/NoRequests";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -104,7 +105,7 @@ function App() {
 
         {!user && <Route path="/createRequest" element={<NotLoggedIn />} />}
 
-        {user && <Route path="/viewRequests" element={<ViewRequests />} />}
+        {user && <Route path="/viewRequests" element={<NoRequests />} />}
 
         {!user && <Route path="/viewRequests" element={<NotLoggedIn />} />}
 

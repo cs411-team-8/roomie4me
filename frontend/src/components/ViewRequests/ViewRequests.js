@@ -2,7 +2,7 @@ import { React, useEffect, useState } from "react";
 import Footer from "../Footer";
 
 function ViewRequests() {
-  const test = async (event) => {
+  const viewDetailedRequest = async (event) => {
     const semester = event.target.closest(".clickable-card").dataset.semester;
     const authorId = event.target.closest(".clickable-card").dataset.id;
     window.location.href = `/request/${authorId}/${semester}`;
@@ -123,7 +123,7 @@ function ViewRequests() {
                   borderColor: "#074d5d",
                   marginBottom: "10px",
                 }}
-                onClick={test}
+                onClick={viewDetailedRequest}
                 data-semester={request.targetSemester}
                 data-id={request.authorId}
                 key={request._id}
@@ -188,7 +188,7 @@ function ViewRequests() {
                           0,
                           450
                         ) + " . . ."}
-                        {/* str.length <= 450 ? str : str.substring(0, 450) */}
+                        {/* str.length <= 450 ? str : str.substring(0, 450) + " . . ." */}
                       </p>
                     </div>
                   </div>
