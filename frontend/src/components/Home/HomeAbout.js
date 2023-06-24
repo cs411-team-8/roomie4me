@@ -71,7 +71,7 @@ function HomeAbout() {
               </svg>
             </div>
             <div className="px-3">
-              <h4 className="text-white">Privacy Consious</h4>
+              <h4 className="text-white">Privacy Conscious</h4>
               <p>
                 We don't sell or market your data. We collect the bare minimum
                 data needed to provide our services. Potential roommates do not
