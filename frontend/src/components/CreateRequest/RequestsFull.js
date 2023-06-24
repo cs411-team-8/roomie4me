@@ -93,12 +93,7 @@ function RequestsFull() {
               <ul className="list-inline">
                 <li className="list-inline-item me-4">
                   <a className="link-light" href="about">
-                    About
-                  </a>
-                </li>
-                <li className="list-inline-item me-4">
-                  <a className="link-light" href="contact">
-                    Contact
+                    About Us
                   </a>
                 </li>
                 <li className="list-inline-item me-4">

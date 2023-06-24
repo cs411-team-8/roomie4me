@@ -13,6 +13,7 @@ import NoRequests from "./components/ViewRequests/NoRequests";
 import TOS from "./components/TOS/TOS";
 import Privacy from "./components/PrivacyPolicy/Privacy";
 import Donate from "./components/Donate/Donate";
+import AboutUs from "./components/AboutUs/AboutUs";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -145,6 +146,8 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
 
         <Route path="/donate" element={<Donate />} />
+
+        <Route path="/about" element={<AboutUs />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

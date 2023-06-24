@@ -29,7 +29,7 @@ function HomeAbout() {
             <div className="px-3">
               <h4 className="text-white">Advanced Filters</h4>
               <p>
-                Take advantage of our comprehensive and advance search filters
+                Take advantage of our comprehensive and advanced search filters
                 and sorters to find just the right roommate for you!
               </p>
             </div>
@@ -51,7 +51,7 @@ function HomeAbout() {
             <div className="px-3">
               <h4 className="text-white">Notifications</h4>
               <p>
-                Recieve email and SMS notifications in real time to stay up to
+                Receive email and SMS notifications in real time to stay up to
                 date on who wants to connect with you.
               </p>
             </div>
@@ -74,9 +74,8 @@ function HomeAbout() {
               <h4 className="text-white">Privacy Conscious</h4>
               <p>
                 We don't sell or market your data. We collect the bare minimum
-                data needed to provide our services. Potential roommates do not
-                receive your phone number without explicit consent. See our{" "}
-                <a href="/privacy">Privacy Policy</a> for more details.
+                data needed to provide our services. See our{" "}
+                <a href="/privacy">Privacy Policy</a> for details.
               </p>
             </div>
           </div>
@@ -142,9 +141,9 @@ function HomeAbout() {
             <div className="px-3">
               <h4 className="text-white">Free</h4>
               <p>
-                This site is completely free. We rely completely on your
-                generous donations to stay afloat. If you have found this site
-                useful, please consider <a href="/donate">donating</a>.
+                This site is completely free. We rely on your donations to stay
+                afloat. If you have found this site useful, please consider{" "}
+                <a href="/donate">donating</a>.
               </p>
             </div>
           </div>
