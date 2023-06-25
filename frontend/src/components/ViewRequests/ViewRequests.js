@@ -25,21 +25,23 @@ function ViewRequests() {
   };
 
   const [requests, setRequests] = useState([]);
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     const test = async () => {
       if (document.cookie) {
         const accessToken = document.cookie.split("access-token=")[1];
         const baseUrl = "http://localhost:8082";
-        const endpoint = "/api/v1/roomie/requests";
+        const requestEndpoint = "/api/v1/roomie/requests";
 
-        const queryParams = new URLSearchParams();
-        queryParams.append("page-number", 0);
-        queryParams.append("batch-size", 25);
-        queryParams.append("sort-mode", "creation");
+        const requestQueryParams = new URLSearchParams();
+        requestQueryParams.append("page-number", 0);
+        requestQueryParams.append("batch-size", 25);
+        requestQueryParams.append("sort-mode", "creation");
 
-        const url = baseUrl + endpoint + "?" + queryParams.toString();
+        const requestUrl =
+          baseUrl + requestEndpoint + "?" + requestQueryParams.toString();
 
-        const options = {
+        const requestOptions = {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -48,9 +50,27 @@ function ViewRequests() {
           },
         };
 
-        const response = await fetch(url, options);
-        const data = await response.json();
-        setRequests(data);
+        const requestResponse = await fetch(requestUrl, requestOptions);
+        const requestData = await requestResponse.json();
+        setRequests(requestData);
+
+        const userEndpoint = "/api/v1/user/findall";
+        const userUrl = baseUrl + userEndpoint;
+        const userOptions = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            userids: requests.map((request) => request.authorId),
+          }),
+        };
+
+        const userData = await fetch(userUrl, userOptions);
+        console.log(userData);
+        setUsers(userData);
       }
     };
     try {
