@@ -117,4 +117,30 @@ const getUser = async (req, res, user) => {
   });
 };
 
-module.exports = { login, deleteUser, updateUser, getUser, myInfo };
+const getUsers = async (req, res, user) => {
+    let userids = req.body["userids"];
+    let variables = {
+        userids: userids,
+    };
+
+    for (let [key, value] of Object.entries(variables)) {
+        console.log(key + " // " + value);
+        if (value === undefined) {
+            res.json({
+                error: "The parameter '" + key + "' was not set!",
+            });
+            return;
+        }
+    }
+
+    let users = new Array()
+
+    for (let userid in userids) {
+        let user = await User.findOne({openid: userid})
+        users.push(user)
+    }
+
+    res.json(users)
+};
+
+module.exports = { login, deleteUser, updateUser, getUser, getUsers, myInfo };
