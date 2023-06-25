@@ -133,14 +133,14 @@ const getUsers = async (req, res, user) => {
     }
   }
 
-  let users = new Array()
+  let users = new Array();
 
-  await userids.forEach(async userid => {
-    let user = await User.findOne({openid: userid})
-    users.push(user)
-  })
+  for (let userid of userids) {
+    let user = await User.findOne({ openid: userid });
+    users.push(user);
+  }
 
-  res.json(users)
+  res.json(users);
 };
 
 module.exports = { login, deleteUser, updateUser, getUser, getUsers, myInfo };
