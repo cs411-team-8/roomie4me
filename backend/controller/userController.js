@@ -1,8 +1,11 @@
 const User = require("../models/userModel");
+const RoomieRequest = require('../models/roomieRequestModel')
+const UserMatchData = require("../models/userMatchDataModel")
 const { google } = require("googleapis");
 const jwt = require("jsonwebtoken");
 const OAuth = require("../utils/OAuth");
 const oAuth = require("../utils/OAuth");
+const MatchCalculator = require("../utils/matchCalculator")
 const NodeMailer = require("../utils/nodeMailer");
 
 // this is NOT a rest api route
@@ -77,7 +80,8 @@ const login = async (req, res) => {
 };
 
 const deleteUser = async (req, res, user) => {
-  //todo
+  //todo delete user
+    // todo also delete match rating
 };
 
 const updateUser = async (req, res, user) => {
@@ -89,6 +93,38 @@ const updateUser = async (req, res, user) => {
       res.json(user);
     });
   });
+
+  // now on the backend also update database match ratings
+  // for everyone the same gender
+  User.find({gender: user.gender}).then(users => {
+    RoomieRequest.find({authorId: user.openid}).then(roomieReq => {
+      for (let aUser in users) {
+        // user -> aUser
+        UserMatchData.findByIdAndUpdate({
+          from: user.openid,
+          to: aUser.openid
+        }, {
+          matchRating: MatchCalculator.calcMatch(user, aUser, user.preferences)
+        }, {
+          upsert: true
+        })
+      }
+    })
+    for (let aUser in users) {
+      RoomieRequest.find({authorId: aUser.openid}).then(roomieReq => {
+        // aUser -> user
+        UserMatchData.findByIdAndUpdate({
+          from: aUser.openid,
+          to: user.openid
+        }, {
+          matchRating: MatchCalculator.calcMatch(aUser, user, aUser.preferences)
+        }, {
+          upsert: true
+        })
+      })
+    }
+  },)
+
 };
 
 const myInfo = async (req, res, user) => {
@@ -133,7 +169,7 @@ const getUsers = async (req, res, user) => {
     }
   }
 
-  let users = new Array()
+  let users = []
 
   await userids.forEach(async userid => {
     let user = await User.findOne({openid: userid})

@@ -12,13 +12,14 @@ const oAuthRouter = require("./routes/oauth");
 // connect to db
 console.log("Initializing database connection...");
 mongoose.connect(process.env.AZURE_COSMOS_CONNECTIONSTRING);
-var conn = mongoose.connection;
+let conn = mongoose.connection;
 conn.on("error", (err) => {
   console.log(err);
 });
+let status = false
 conn.once("open", () => {
   console.log("Connected to the database!");
-  status = true;
+  status = true
 });
 
 // set json parser
