@@ -216,9 +216,11 @@ function ViewRequests() {
                           marginBottom: "0px",
                         }}
                       >
-                        {users[index]?.aboutMe.length <= 450
-                          ? users[index].aboutMe
-                          : users[index].aboutMe.substring(0, 450) + " . . ."}
+                        {users[index]?.aboutMe &&
+                          (users[index].aboutMe.length <= 450
+                            ? users[index].aboutMe
+                            : users[index].aboutMe.substring(0, 450) +
+                              " . . .")}
                       </p>
                     </div>
                   </div>
