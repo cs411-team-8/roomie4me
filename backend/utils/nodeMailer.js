@@ -18,6 +18,7 @@ async function sendNotif(senderUser, targetUser, subject, messageContent, isHtml
         from: `"Roomie4Me Notification" <${process.env.SMTP_USERNAME}>`, // sender address
         replyTo: senderUser.email,
         to: `${targetUser.name.firstName} ${targetUser.name.lastName} <${targetUser.email}>`, // list of receivers
+        unsubscribe: `https://bu.roomie4.me/`,
         subject: subject, // Subject line
     }
 
