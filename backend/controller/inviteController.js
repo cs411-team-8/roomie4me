@@ -196,13 +196,16 @@ const myOutgoing = async (req, res, user) => {
 
     let modifiedInvites = []
 
-    for (let invite in invites) {
+    for (let invite of invites) {
       let u = await User.findOne({
         openid: invite.requestTargetId
       })
       invite = {...invite, targetUser: u}
       modifiedInvites.push(invite)
     }
+
+    console.log("TEST DELETE ME")
+    console.log(invites)
 
     res.json(modifiedInvites);
   });
