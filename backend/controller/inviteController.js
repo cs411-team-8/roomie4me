@@ -1,0 +1,184 @@
+const RoomieRequest = require("../models/roomieRequestModel");
+const User = require("../models/userModel");
+const Invite = require("../models/pendingInvites")
+
+const sendRequest = async (req, res, user) => {
+  let requestTargetId = req.body["requestTargetId"];
+  let targetSemester = req.body["targetSemester"];
+  let message = req.body["message"];
+
+  // make sure all parameters were set
+  let variables = {
+    authorId: requestTargetId,
+    targetSemester: targetSemester
+  };
+  for (let [key, value] of Object.entries(variables)) {
+    console.log(key + " // " + value);
+    if (value === undefined) {
+      res.json({
+        error: "The parameter '" + key + "' was not set!",
+      });
+      return;
+    }
+  }
+
+  let roomieReq = await RoomieRequest.findOne({
+    openid: requestTargetId,
+    targetSemester: targetSemester,
+  })
+
+  let targetUser = User.findOne({
+    openid: requestTargetId,
+  });
+
+  if (targetUser === null || targetUser.gender !== user.gender) {
+    req.json({
+      error: "Invalid target user!"
+    })
+
+    return
+  }
+
+  if (targetSemester) {
+    //todo: validate target semester too in future?
+  }
+
+  Invite.create({
+    requestSenderId: user.openid,
+    requestTargetId: requestTargetId,
+    requestSemester: targetSemester,
+    message: message
+  }).then(invite => {
+    req.json(invite)
+    //todo
+    // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
+    //     `
+    // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
+    // `, true)
+  })
+
+};
+
+const declineRequest = async (req, res, user) => {
+  let requestSenderId = req.body["requestSenderId"];
+  let targetSemester = req.body["targetSemester"];
+  let message = req.body["message"];
+
+  // make sure all parameters were set
+  let variables = {
+    authorId: requestSenderId,
+    targetSemester: targetSemester,
+    message: message,
+  };
+  for (let [key, value] of Object.entries(variables)) {
+    console.log(key + " // " + value);
+    if (value === undefined) {
+      res.json({
+        error: "The parameter '" + key + "' was not set!",
+      });
+      return;
+    }
+  }
+
+  let roomieReq = await RoomieRequest.findOne({
+    openid: user.openid,
+    targetSemester: targetSemester,
+  })
+
+  let requestingUser = User.findOne({
+    openid: requestSenderId,
+  })
+
+  if (requestingUser === null) {
+    req.json({
+      error: "Invalid user specified"
+    })
+
+    return
+  }
+
+  Invite.deleteOne({
+    requestSenderId: requestingUser.openid,
+    requestTargetId: user.openid,
+    requestSemester: targetSemester
+  }).then(res => {
+    req.json(res)
+    //todo
+    // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
+    //     `
+    // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
+    // `, true)
+  })
+
+};
+
+const acceptRequest = async (req, res, user) => {
+  let requestSenderId = req.body["requestSenderId"];
+  let targetSemester = req.body["targetSemester"];
+  let message = req.body["message"];
+
+  // make sure all parameters were set
+  let variables = {
+    authorId: requestSenderId,
+    targetSemester: targetSemester,
+    message: message,
+  };
+  for (let [key, value] of Object.entries(variables)) {
+    console.log(key + " // " + value);
+    if (value === undefined) {
+      res.json({
+        error: "The parameter '" + key + "' was not set!",
+      });
+      return;
+    }
+  }
+
+  let roomieReq = await RoomieRequest.findOne({
+    openid: user.openid,
+    targetSemester: targetSemester,
+  })
+
+  let requestingUser = User.findOne({
+    openid: requestSenderId,
+  })
+
+  if (requestingUser === null) {
+    req.json({
+      error: "Invalid user specified"
+    })
+
+    return
+  }
+
+  Invite.deleteOne({
+    requestSenderId: requestingUser.openid,
+    requestTargetId: user.openid,
+    requestSemester: targetSemester
+  }).then(res => {
+    req.json(res)
+    //todo
+    // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
+    //     `
+    // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
+    // `, true)
+  })
+
+};
+
+const myIncoming = async (req, res, user) => {
+  Invite.find({
+    requestTargetId: user.openid
+  }).then(invites => {
+    req.json(invites)
+  })
+};
+
+const myOutgoing = async (req, res, user) => {
+  Invite.find({
+    requestSenderId: user.openid
+  }).then(invites => {
+    req.json(invites)
+  })
+};
+
+module.exports = {sendRequest, acceptRequest, declineRequest, myIncoming, myOutgoing}

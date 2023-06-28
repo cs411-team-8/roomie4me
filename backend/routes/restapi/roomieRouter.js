@@ -4,23 +4,6 @@ const RoomieController = require("../../controller/roomieController");
 const tokenVerifier = require("../../utils/tokenVerifier");
 const UserController = require("../../controller/userController");
 
-router.post("/respond", (req, res) => {
-  tokenVerifier
-    .getAuthenticatedUser(req)
-    .then((user) => {
-      RoomieController.contactRequest(req, res, user).catch((err) => {
-        console.log(err);
-        res.status(500).send("An internal error occurred.");
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(401).json({
-        error: "Unauthorized request or invalid access token.",
-      });
-    });
-});
-
 router.get("/myrequests", (req, res) => {
   tokenVerifier
     .getAuthenticatedUser(req)

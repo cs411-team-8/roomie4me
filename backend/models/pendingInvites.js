@@ -26,6 +26,6 @@ const PendingInviteSchema = new Schema(
     }
 );
 
-PendingInviteSchema.index({ authorId: 1, targetSemester: 1 }, { unique: true });
+PendingInviteSchema.index({ requestSenderId: 1, requestTargetId: 1, requestSemester: 1 }, { unique: true });
 
 module.exports = mongoose.model("PendingInvite", PendingInviteSchema);
