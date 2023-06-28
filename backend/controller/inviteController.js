@@ -173,7 +173,15 @@ const acceptRequest = async (req, res, user) => {
 const myIncoming = async (req, res, user) => {
   Invite.find({
     requestTargetId: user.openid,
-  }).then((invites) => {
+  }).then(async (invites) => {
+
+    for (let invite in invites) {
+      let u = await User.findOne({
+        openid: invite.requestSenderId
+      })
+      invite = {...invite, senderUser: u}
+    }
+
     res.json(invites);
   });
 };
@@ -181,7 +189,15 @@ const myIncoming = async (req, res, user) => {
 const myOutgoing = async (req, res, user) => {
   Invite.find({
     requestSenderId: user.openid,
-  }).then((invites) => {
+  }).then(async (invites) => {
+
+    for (let invite in invites) {
+      let u = await User.findOne({
+        openid: invite.requestTargetId
+      })
+      invite = {...invite, targetUser: u}
+    }
+
     res.json(invites);
   });
 };
