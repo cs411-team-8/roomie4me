@@ -14,6 +14,10 @@ import TOS from "./components/TOS/TOS";
 import Privacy from "./components/PrivacyPolicy/Privacy";
 import Donate from "./components/Donate/Donate";
 import AboutUs from "./components/AboutUs/AboutUs";
+import MyInvites from "./components/MyInvites/MyInvites";
+import NoInvites from "./components/MyInvites/NoInvites";
+import IncomingInvite from "./components/MyInvites/IncomingInvite";
+import OutgoingInvite from "./components/MyInvites/OutgoingInvite";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -119,9 +123,9 @@ function App() {
 
         {!user && <Route path="/myAccount" element={<NotLoggedIn />} />}
 
-        {user && <Route path="/myDMs" element={<InDev />} />}
+        {user && <Route path="/myInvites" element={<MyInvites />} />}
 
-        {!user && <Route path="/myDMs" element={<NotLoggedIn />} />}
+        {!user && <Route path="/myInvites" element={<NotLoggedIn />} />}
 
         {user && (
           <Route
