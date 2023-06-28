@@ -32,8 +32,16 @@ const sendRequest = async (req, res, user) => {
   });
 
   if (targetUser === null || targetUser.gender !== user.gender) {
-    req.json({
+    res.json({
       error: "Invalid target user!"
+    })
+
+    return
+  }
+
+  if (targetUser.openid === user.openid) {
+    res.json({
+      error: "You can't send a request to yourself!"
     })
 
     return
@@ -49,7 +57,7 @@ const sendRequest = async (req, res, user) => {
     requestSemester: targetSemester,
     message: message
   }).then(invite => {
-    req.json(invite)
+    res.json(invite)
     //todo
     // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
     //     `
@@ -90,7 +98,7 @@ const declineRequest = async (req, res, user) => {
   })
 
   if (requestingUser === null) {
-    req.json({
+    res.json({
       error: "Invalid user specified"
     })
 
@@ -101,8 +109,8 @@ const declineRequest = async (req, res, user) => {
     requestSenderId: requestingUser.openid,
     requestTargetId: user.openid,
     requestSemester: targetSemester
-  }).then(res => {
-    req.json(res)
+  }).then(response => {
+    res.json(response)
     //todo
     // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
     //     `
@@ -143,7 +151,7 @@ const acceptRequest = async (req, res, user) => {
   })
 
   if (requestingUser === null) {
-    req.json({
+    res.json({
       error: "Invalid user specified"
     })
 
@@ -154,8 +162,8 @@ const acceptRequest = async (req, res, user) => {
     requestSenderId: requestingUser.openid,
     requestTargetId: user.openid,
     requestSemester: targetSemester
-  }).then(res => {
-    req.json(res)
+  }).then(response => {
+    res.json(response)
     //todo
     // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
     //     `
@@ -169,7 +177,7 @@ const myIncoming = async (req, res, user) => {
   Invite.find({
     requestTargetId: user.openid
   }).then(invites => {
-    req.json(invites)
+    res.json(invites)
   })
 };
 
@@ -177,7 +185,7 @@ const myOutgoing = async (req, res, user) => {
   Invite.find({
     requestSenderId: user.openid
   }).then(invites => {
-    req.json(invites)
+    res.json(invites)
   })
 };
 
