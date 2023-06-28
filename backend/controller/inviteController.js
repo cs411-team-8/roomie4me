@@ -1,6 +1,6 @@
 const RoomieRequest = require("../models/roomieRequestModel");
 const User = require("../models/userModel");
-const Invite = require("../models/pendingInvites")
+const Invite = require("../models/pendingInvites");
 
 const sendRequest = async (req, res, user) => {
   let requestTargetId = req.body["requestTargetId"];
@@ -9,8 +9,8 @@ const sendRequest = async (req, res, user) => {
 
   // make sure all parameters were set
   let variables = {
-    authorId: requestTargetId,
-    targetSemester: targetSemester
+    requestTargetId: requestTargetId,
+    targetSemester: targetSemester,
   };
   for (let [key, value] of Object.entries(variables)) {
     console.log(key + " // " + value);
@@ -25,26 +25,26 @@ const sendRequest = async (req, res, user) => {
   let roomieReq = await RoomieRequest.findOne({
     openid: requestTargetId,
     targetSemester: targetSemester,
-  })
+  });
 
-  let targetUser = User.findOne({
+  let targetUser = await User.findOne({
     openid: requestTargetId,
   });
 
   if (targetUser === null || targetUser.gender !== user.gender) {
     res.json({
-      error: "Invalid target user!"
-    })
+      error: "Invalid target user!",
+    });
 
-    return
+    return;
   }
 
   if (targetUser.openid === user.openid) {
     res.json({
-      error: "You can't send a request to yourself!"
-    })
+      error: "You can't send a request to yourself!",
+    });
 
-    return
+    return;
   }
 
   if (targetSemester) {
@@ -55,16 +55,15 @@ const sendRequest = async (req, res, user) => {
     requestSenderId: user.openid,
     requestTargetId: requestTargetId,
     requestSemester: targetSemester,
-    message: message
-  }).then(invite => {
-    res.json(invite)
+    message: message,
+  }).then((invite) => {
+    res.json(invite);
     //todo
     // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
     //     `
     // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
     // `, true)
-  })
-
+  });
 };
 
 const declineRequest = async (req, res, user) => {
@@ -91,33 +90,32 @@ const declineRequest = async (req, res, user) => {
   let roomieReq = await RoomieRequest.findOne({
     openid: user.openid,
     targetSemester: targetSemester,
-  })
+  });
 
   let requestingUser = User.findOne({
     openid: requestSenderId,
-  })
+  });
 
   if (requestingUser === null) {
     res.json({
-      error: "Invalid user specified"
-    })
+      error: "Invalid user specified",
+    });
 
-    return
+    return;
   }
 
   Invite.deleteOne({
     requestSenderId: requestingUser.openid,
     requestTargetId: user.openid,
-    requestSemester: targetSemester
-  }).then(response => {
-    res.json(response)
+    requestSemester: targetSemester,
+  }).then((response) => {
+    res.json(response);
     //todo
     // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
     //     `
     // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
     // `, true)
-  })
-
+  });
 };
 
 const acceptRequest = async (req, res, user) => {
@@ -144,49 +142,54 @@ const acceptRequest = async (req, res, user) => {
   let roomieReq = await RoomieRequest.findOne({
     openid: user.openid,
     targetSemester: targetSemester,
-  })
+  });
 
   let requestingUser = User.findOne({
     openid: requestSenderId,
-  })
+  });
 
   if (requestingUser === null) {
     res.json({
-      error: "Invalid user specified"
-    })
+      error: "Invalid user specified",
+    });
 
-    return
+    return;
   }
 
   Invite.deleteOne({
     requestSenderId: requestingUser.openid,
     requestTargetId: user.openid,
-    requestSemester: targetSemester
-  }).then(response => {
-    res.json(response)
+    requestSemester: targetSemester,
+  }).then((response) => {
+    res.json(response);
     //todo
     // NodeMailer.sendNotif(user, targetUser, user.name.firstName + " has requested to contact you!",
     //     `
     // Hey <b>${targetUser.name.firstName}</b>! ${user.name.firstName} ${user.name.lastName} has requested to contact you with regards to your
     // `, true)
-  })
-
+  });
 };
 
 const myIncoming = async (req, res, user) => {
   Invite.find({
-    requestTargetId: user.openid
-  }).then(invites => {
-    res.json(invites)
-  })
+    requestTargetId: user.openid,
+  }).then((invites) => {
+    res.json(invites);
+  });
 };
 
 const myOutgoing = async (req, res, user) => {
   Invite.find({
-    requestSenderId: user.openid
-  }).then(invites => {
-    res.json(invites)
-  })
+    requestSenderId: user.openid,
+  }).then((invites) => {
+    res.json(invites);
+  });
 };
 
-module.exports = {sendRequest, acceptRequest, declineRequest, myIncoming, myOutgoing}
+module.exports = {
+  sendRequest,
+  acceptRequest,
+  declineRequest,
+  myIncoming,
+  myOutgoing,
+};

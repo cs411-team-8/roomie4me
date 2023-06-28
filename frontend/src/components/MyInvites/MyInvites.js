@@ -18,6 +18,52 @@ function MyInvites() {
     }, 50);
   }, []);
 
+  const [incoming, setIncoming] = useState();
+  const [outgoing, setOutgoing] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (document.cookie) {
+          const accessToken = document.cookie.split("access-token=")[1];
+          const baseUrl = "http://localhost:8082";
+          const incomingEndpoint = "/api/v1/invite/myincoming";
+          const incomingUrl = baseUrl + incomingEndpoint;
+          const incomingOptions = {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          };
+          const incomingResponse = await fetch(incomingUrl, incomingOptions);
+          const incomingData = await incomingResponse.json();
+          setIncoming(incomingData);
+
+          const outgoingEndpoint = "/api/v1/invite/myoutgoing";
+          const outgoingUrl = baseUrl + outgoingEndpoint;
+          const outgoingOptions = {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          };
+          const outgoingResponse = await fetch(outgoingUrl, outgoingOptions);
+          const outgoingData = await outgoingResponse.json();
+          console.log(incomingData);
+          console.log(outgoingData);
+          setOutgoing(outgoingData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div>
       {timer && (

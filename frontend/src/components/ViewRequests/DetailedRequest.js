@@ -83,6 +83,7 @@ function DetailedRequest() {
   };
 
   const handleSubmit = async (event) => {
+    console.log("hi");
     event.preventDefault();
     const url = "http://localhost:8082" + "/api/v1/invite/send";
     const accessToken = document.cookie.split("access-token=")[1];
@@ -1296,8 +1297,8 @@ function DetailedRequest() {
                       </svg>
                       &nbsp; Request to Connect
                     </h3>
-                    <form onSubmit={handleSubmit}>
-                      <div className="form-group required">
+                    <form>
+                      <div className="form-group">
                         <label
                           className="form-label"
                           htmlFor="message"
@@ -1314,7 +1315,6 @@ function DetailedRequest() {
                           }}
                           name="message"
                           placeholder={`Please enter a message for ${user.name.firstName}`}
-                          required
                         />
                       </div>
                       <div style={{ textAlign: "center" }}>
@@ -1331,6 +1331,7 @@ function DetailedRequest() {
                             width: "200px",
                             marginBottom: "20px",
                           }}
+                          onClick={handleSubmit}
                         />
                       </div>
                     </form>
