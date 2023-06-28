@@ -15,7 +15,6 @@ import Privacy from "./components/PrivacyPolicy/Privacy";
 import Donate from "./components/Donate/Donate";
 import AboutUs from "./components/AboutUs/AboutUs";
 import MyInvites from "./components/MyInvites/MyInvites";
-import NoInvites from "./components/MyInvites/NoInvites";
 import IncomingInvite from "./components/MyInvites/IncomingInvite";
 import OutgoingInvite from "./components/MyInvites/OutgoingInvite";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
