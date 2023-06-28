@@ -84,7 +84,7 @@ function DetailedRequest() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = "http://localhost:8082" + "/api/v1/roomie/respond";
+    const url = "http://localhost:8082" + "/api/v1/invite/send";
     const accessToken = document.cookie.split("access-token=")[1];
     const message = document.querySelector(".message").value;
 
@@ -96,6 +96,7 @@ function DetailedRequest() {
         Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
+        requestTargetId: user.openid,
         targetSemester: request.targetSemester,
         message: message,
       }),
