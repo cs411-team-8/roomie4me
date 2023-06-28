@@ -26,59 +26,64 @@ function ViewRequests() {
 
   const [requests, setRequests] = useState([]);
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
-    const test = async () => {
-      if (document.cookie) {
-        const accessToken = document.cookie.split("access-token=")[1];
-        const baseUrl = "http://localhost:8082";
-        const requestEndpoint = "/api/v1/roomie/requests";
+    const fetchData = async () => {
+      try {
+        if (document.cookie) {
+          const accessToken = document.cookie.split("access-token=")[1];
+          const baseUrl = "http://localhost:8082";
+          const requestEndpoint = "/api/v1/roomie/requests";
 
-        const requestQueryParams = new URLSearchParams();
-        requestQueryParams.append("page-number", 0);
-        requestQueryParams.append("batch-size", 25);
-        requestQueryParams.append("sort-mode", "creation");
+          const requestQueryParams = new URLSearchParams();
+          requestQueryParams.append("page-number", 0);
+          requestQueryParams.append("batch-size", 25);
+          requestQueryParams.append("sort-mode", "creation");
 
-        const requestUrl =
-          baseUrl + requestEndpoint + "?" + requestQueryParams.toString();
+          const requestUrl =
+            baseUrl + requestEndpoint + "?" + requestQueryParams.toString();
 
-        const requestOptions = {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        };
+          const requestOptions = {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          };
 
-        const requestResponse = await fetch(requestUrl, requestOptions);
-        const requestData = await requestResponse.json();
-        setRequests(requestData);
+          const requestResponse = await fetch(requestUrl, requestOptions);
+          const requestData = await requestResponse.json();
+          setRequests(requestData);
 
-        const userEndpoint = "/api/v1/user/findall";
-        const userUrl = baseUrl + userEndpoint;
-        const userOptions = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: JSON.stringify({
-            userids: requests.map((request) => request.authorId),
-          }),
-        };
+          const userEndpoint = "/api/v1/user/findall";
+          const userUrl = baseUrl + userEndpoint;
+          const userOptions = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({
+              userids: requestData.map((request) => request.authorId),
+            }),
+          };
 
-        const userData = await fetch(userUrl, userOptions);
-        console.log(userData);
-        setUsers(userData);
+          const userResponse = await fetch(userUrl, userOptions);
+          const userData = await userResponse.json();
+          console.log(requestData);
+          console.log(userData);
+          setUsers(userData);
+        }
+      } catch (error) {
+        console.log(error);
       }
     };
-    try {
-      test();
-    } catch (error) {
-      console.log(error);
-    }
+
+    fetchData();
   }, []);
+
   return (
     <div>
       {timer && (
@@ -140,7 +145,7 @@ function ViewRequests() {
               paddingBottom: "0px",
             }}
           >
-            {requests.map((request) => (
+            {requests.map((request, index) => (
               <div
                 className="card clickable-card"
                 style={{
@@ -161,7 +166,9 @@ function ViewRequests() {
                           color: "#ffffff",
                         }}
                       >
-                        Munir Siddiqui
+                        {users[index]?.name?.firstName +
+                          " " +
+                          users[index]?.name?.lastName}
                       </h4>
                       <p
                         style={{
@@ -169,7 +176,7 @@ function ViewRequests() {
                           marginBottom: "0px",
                         }}
                       >
-                        Pakistan
+                        {users[index]?.internationalStatus.country}
                       </p>
                       <p
                         style={{
@@ -209,11 +216,11 @@ function ViewRequests() {
                           marginBottom: "0px",
                         }}
                       >
-                        {`Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in`.substring(
-                          0,
-                          450
-                        ) + " . . ."}
-                        {/* str.length <= 450 ? str : str.substring(0, 450) + " . . ." */}
+                        {users[index]?.aboutMe &&
+                          (users[index].aboutMe.length <= 450
+                            ? users[index].aboutMe
+                            : users[index].aboutMe.substring(0, 450) +
+                              " . . .")}
                       </p>
                     </div>
                   </div>
