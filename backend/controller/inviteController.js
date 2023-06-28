@@ -175,14 +175,17 @@ const myIncoming = async (req, res, user) => {
     requestTargetId: user.openid,
   }).then(async (invites) => {
 
+    let modifiedInvites = []
+
     for (let invite in invites) {
       let u = await User.findOne({
         openid: invite.requestSenderId
       })
       invite = {...invite, senderUser: u}
+      modifiedInvites.push(invite)
     }
 
-    res.json(invites);
+    res.json(modifiedInvites);
   });
 };
 
@@ -191,14 +194,17 @@ const myOutgoing = async (req, res, user) => {
     requestSenderId: user.openid,
   }).then(async (invites) => {
 
+    let modifiedInvites = []
+
     for (let invite in invites) {
       let u = await User.findOne({
         openid: invite.requestTargetId
       })
       invite = {...invite, targetUser: u}
+      modifiedInvites.push(invite)
     }
 
-    res.json(invites);
+    res.json(modifiedInvites);
   });
 };
 
