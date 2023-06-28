@@ -204,9 +204,6 @@ const myOutgoing = async (req, res, user) => {
       modifiedInvites.push(invite)
     }
 
-    console.log("TEST DELETE ME")
-    console.log(invites)
-
     res.json(modifiedInvites);
   });
 };
