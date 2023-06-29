@@ -112,7 +112,9 @@ function App() {
 
         {!user && <Route path="/createRequest" element={<NotLoggedIn />} />}
 
-        {user && <Route path="/viewRequests" element={<ViewRequests />} />}
+        {user && (
+          <Route path="/viewRequests" element={<ViewRequests user={user} />} />
+        )}
 
         {!user && <Route path="/viewRequests" element={<NotLoggedIn />} />}
 
@@ -122,7 +124,7 @@ function App() {
 
         {!user && <Route path="/myAccount" element={<NotLoggedIn />} />}
 
-        {user && <Route path="/myInvites" element={<MyInvites />} />}
+        {user && <Route path="/myInvites" element={<InDev />} />}
 
         {!user && <Route path="/myInvites" element={<NotLoggedIn />} />}
 
@@ -136,6 +138,34 @@ function App() {
         {!user && (
           <Route
             path="/request/:authorid/:semester"
+            element={<NotLoggedIn />}
+          />
+        )}
+
+        {user && (
+          <Route
+            path="/incomingInvite/:id/:semester"
+            element={<IncomingInvite user={user} />}
+          />
+        )}
+
+        {!user && (
+          <Route
+            path="/incomingInvite/:id/:semester"
+            element={<NotLoggedIn />}
+          />
+        )}
+
+        {user && (
+          <Route
+            path="/outgoingInvite/:id/:semester"
+            element={<OutgoingInvite user={user} />}
+          />
+        )}
+
+        {!user && (
+          <Route
+            path="/outgoingInvite/:id/:semester"
             element={<NotLoggedIn />}
           />
         )}

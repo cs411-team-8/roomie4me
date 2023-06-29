@@ -2,6 +2,20 @@ import { React, useState, useEffect } from "react";
 import Footer from "../Footer";
 
 function MyInvites() {
+  const viewIncoming = async (event) => {
+    const semester =
+      event.target.closest(".clickable-card").dataset.incomingSemester;
+    const id = event.target.closest(".clickable-card").dataset.incomingId;
+    window.location.href = `/incomingInvite/${id}/${semester}`;
+  };
+
+  const viewOutgoing = async (event) => {
+    const semester =
+      event.target.closest(".clickable-card").dataset.outgoingSemester;
+    const id = event.target.closest(".clickable-card").dataset.outgoingId;
+    window.location.href = `/outgoingInvite/${id}/${semester}`;
+  };
+
   const handleHome = () => {
     window.location.href = "/";
   };
@@ -157,6 +171,9 @@ function MyInvites() {
                               borderColor: "#074d5d",
                               marginBottom: "0px",
                             }}
+                            onClick={viewIncoming}
+                            data-incomingSemester={request.targetSemester}
+                            data-incomingId={request.authorId}
                           >
                             <div className="card-body">
                               <div className="row">
@@ -238,6 +255,9 @@ function MyInvites() {
                               background: "#074d5d",
                               borderColor: "#074d5d",
                             }}
+                            onClick={viewOutgoing}
+                            data-outgoingSemester={request.targetSemester}
+                            data-outgoingId={request.targetUser.openid}
                           >
                             <div className="card-body">
                               <div className="row">
