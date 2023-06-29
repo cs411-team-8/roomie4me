@@ -1,4 +1,4 @@
-let User = require('../models/userModel')
+let User = require("../models/userModel");
 
 /**
  *
@@ -22,6 +22,7 @@ let User = require('../models/userModel')
 function calcMatch(user1, user2, preferences) {
   // each category is worth up to 10 points
 
+  /*
   // if age is with in 1 yr, its 10/10 pts
   // it scales between 0-10 from yr 1-5 where 5yr age difference is 0 pts
   // then we take the result and multiply by the weight
@@ -46,8 +47,8 @@ function calcMatch(user1, user2, preferences) {
   let drugsScore = getWeights(preferences.similarDrugIntake) * getSimilarity(user1.drugs.other, user2.drugs.other);
 
   let sleepScheduleScore = getWeights(preferences.similarSleepSchedule); //todo: too complicated for now
-
-  return 100
+  */
+  return 100;
 } //todo: I need to come up with a fancy algorithm to generate a similarity match between 1-100 using this data
 
 /**
@@ -56,9 +57,9 @@ function calcMatch(user1, user2, preferences) {
 function getAge(date) {
   let birthdate = new Date("1990/1/1");
   let cur = new Date();
-  let diff = cur-birthdate; // This is the difference in milliseconds
-  let age = diff/31557600000; // Divide by 1000*60*60*24*365.25
-  return age
+  let diff = cur - birthdate; // This is the difference in milliseconds
+  let age = diff / 31557600000; // Divide by 1000*60*60*24*365.25
+  return age;
 }
 
 /**
@@ -69,31 +70,25 @@ function getAge(date) {
  */
 function getSimilarity(value, compareTo, range) {
   if (value instanceof Array) {
-
     // count matches
-    let common = countCommonElements(value, compareTo)
-    return common / value.length
-
+    let common = countCommonElements(value, compareTo);
+    return common / value.length;
   } else if (value instanceof Boolean) {
-
     // return 0 or 1
-    return value === compareTo ? 1 : 0
-
+    return value === compareTo ? 1 : 0;
   } else if (value instanceof Number) {
-
     // compare distance based on range if value==compareTo ret 1
     // if abs(value-compareTo) - range > 0 ret 0
     // else ret abs(value-compareTo) / range
     if (value === compareTo) {
-      return 1
+      return 1;
     } else if (Math.abs(value - compareTo) - range > 0) {
-      return 0
+      return 0;
     } else {
-      return Math.abs(value - compareTo) / range
+      return Math.abs(value - compareTo) / range;
     }
-
   } else {
-    throw "Unsupported type"
+    throw "Unsupported type";
   }
 }
 
@@ -109,16 +104,16 @@ function countCommonElements(array1, array2) {
 
 function getWeights(scale) {
   if (scale === 1) {
-    return 0.0
+    return 0.0;
   } else if (scale === 2) {
-    return 0.3
+    return 0.3;
   } else if (scale === 3) {
-    return 0.5
+    return 0.5;
   } else if (scale === 4) {
-    return 0.7
+    return 0.7;
   } else if (scale === 5) {
-    return 1
+    return 1;
   }
 }
 
-module.exports = {calcMatch}
+module.exports = { calcMatch };

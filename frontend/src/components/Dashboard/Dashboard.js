@@ -22,7 +22,7 @@ function Dashboard(props) {
   const handleCard2 = async () => {
     if (document.cookie) {
       const accessToken = document.cookie.split("access-token=")[1];
-      const baseUrl = "http://localhost:8082";
+      const baseUrl = process.env.REACT_APP_BACKEND_URL;
       const endpoint = "/api/v1/roomie/requests";
 
       const queryParams = new URLSearchParams();

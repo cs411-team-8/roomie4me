@@ -13,7 +13,7 @@ function DetailedRequest() {
     const test = async () => {
       if (document.cookie) {
         const accessToken = document.cookie.split("access-token=")[1];
-        const baseUrl = "http://localhost:8082";
+        const baseUrl = process.env.REACT_APP_BACKEND_URL;
         const requestEndpoint = "/api/v1/roomie/request";
         const decodedString = decodeURIComponent(
           window.location.pathname.split("/request/")[1]
@@ -85,7 +85,7 @@ function DetailedRequest() {
   const handleSubmit = async (event) => {
     console.log("hi");
     event.preventDefault();
-    const url = "http://localhost:8082" + "/api/v1/invite/send";
+    const url = process.env.REACT_APP_BACKEND_URL + "/api/v1/invite/send";
     const accessToken = document.cookie.split("access-token=")[1];
     const message = document.querySelector(".message").value;
 

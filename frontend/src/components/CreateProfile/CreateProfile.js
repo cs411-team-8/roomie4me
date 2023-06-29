@@ -12,7 +12,7 @@ function CreateProfile(props) {
   //     const test = async () => {
   //       if (document.cookie) {
   //         const accessToken = document.cookie.split("access-token=")[1];
-  //         const url = "http://localhost:8082" + "/api/v1/user/myinfo";
+  //         const url = "process.env.REACT_APP_BACKEND_URL" + "/api/v1/user/myinfo";
   //         const options = {
   //           method: "GET",
   //           headers: {
@@ -39,7 +39,7 @@ function CreateProfile(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = "http://localhost:8082" + "/api/v1/user/update";
+    const url = process.env.REACT_APP_BACKEND_URL + "/api/v1/user/update";
     const accessToken = document.cookie.split("access-token=")[1];
     const firstName = document.querySelector(".fname").value;
     const lastName = document.querySelector(".lname").value;

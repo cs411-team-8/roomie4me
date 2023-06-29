@@ -30,7 +30,7 @@ function HomeLogin() {
           </p>
         </div>
         <div className="col d-inline-flex d-md-flex justify-content-md-center align-items-md-center">
-          <a href={`http://localhost:8082/oauth/url`}>
+          <a href={`${process.env.REACT_APP_BACKEND_URL}/oauth/url`}>
             <picture>
               <img
                 src="assets/img/btn_google_signin_dark_normal_web@2x.png"
