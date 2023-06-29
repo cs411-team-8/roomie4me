@@ -83,6 +83,7 @@ function DetailedRequest() {
   };
 
   const handleSubmit = async (event) => {
+    console.log(user.openid);
     console.log("hi");
     event.preventDefault();
     const url = process.env.REACT_APP_BACKEND_URL + "/api/v1/invite/send";
