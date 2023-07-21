@@ -1,17 +1,18 @@
-require("dotenv").config(); // load environment variables before anything
+import dotenv from 'dotenv'
+import express from 'express';
+import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import bodyParser from "body-parser";
 
-const express = require("express");
-const mongoose = require("mongoose");
-const app = express();
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const bodyParser = require("body-parser");
+dotenv.config()
 const restApiRouter = require("./routes/restapi/mainRouter");
 const oAuthRouter = require("./routes/oauth");
+const app = express();
 
 // connect to db
 console.log("Initializing database connection...");
-mongoose.connect(process.env.AZURE_COSMOS_CONNECTIONSTRING);
+mongoose.connect(process.env.AZURE_COSMOS_CONNECTIONSTRING as string);
 let conn = mongoose.connection;
 conn.on("error", (err) => {
   console.log(err);
@@ -42,5 +43,4 @@ app.get("/", (req, res) => {
 });
 
 const port = process.env.PORT || 8082;
-
 app.listen(port, () => console.log(`Server running on port ${port}`));

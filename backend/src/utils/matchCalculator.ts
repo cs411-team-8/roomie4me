@@ -1,4 +1,4 @@
-let User = require("../models/userModel");
+import {User, UserModel} from '../models/userModel'
 
 /**
  *
@@ -19,7 +19,7 @@ let User = require("../models/userModel");
  * wn/total weight=percent the nth weight counts from 0-1
  * @returns {number}
  */
-function calcMatch(user1, user2, preferences) {
+function calcMatch(user1 : User, user2 : User, preferences : any) {
   // each category is worth up to 10 points
 
   /*
@@ -54,7 +54,7 @@ function calcMatch(user1, user2, preferences) {
 /**
  * @param date {Date}
  */
-function getAge(date) {
+function getAge(date : Date) {
   let birthdate = new Date("1990/1/1");
   let cur = new Date();
   let diff = cur - birthdate; // This is the difference in milliseconds

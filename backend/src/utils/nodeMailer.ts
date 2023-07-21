@@ -1,12 +1,13 @@
+import {User} from '../models/userModel'
 const nodeMailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
 async function sendNotif(
-  senderUser,
-  targetUser,
-  subject,
-  messageContent,
-  isHtml
+  senderUser: User,
+  targetUser: User,
+  subject: string,
+  messageContent: string,
+  isHtml: boolean
 ) {
   // create reusable transporter object using the default SMTP transport
   let transporter = nodeMailer.createTransport({
@@ -19,10 +20,10 @@ async function sendNotif(
     },
   });
 
-  let content = {
+  let content : any = {
     from: `"Roomie4Me Notification" <${process.env.SMTP_USERNAME}>`, // sender address
     replyTo: senderUser.email,
-    to: `${targetUser.name.firstName} ${targetUser.name.lastName} <${targetUser.email}>`, // list of receivers
+    to: `${targetUser.name?.firstName} ${targetUser.name?.lastName} <${targetUser.email}>`, // list of receivers
     unsubscribe: `https://bu.roomie4.me/`,
     subject: subject, // Subject line
   };
