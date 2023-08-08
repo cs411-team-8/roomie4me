@@ -12,7 +12,7 @@ function MyAccount(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = process.env.REACT_APP_BACKEND_URL + "/api/v1/user/update";
+    const url = "/api/v1/user/update";
     const accessToken = document.cookie.split("access-token=")[1];
     const firstName = document.querySelector(".fname").value;
     const lastName = document.querySelector(".lname").value;

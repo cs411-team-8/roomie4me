@@ -1,4 +1,8 @@
-const User = require("../models/userModel");
+import {Response, Request} from 'express';
+import {UserModel, User} from '../models/userModel'
+import * as auth from 'google-auth-library'
+import {GetTokenResponse} from "google-auth-library/build/src/auth/oauth2client";
+import {RoomieRequestModel} from "../models/roomieRequestModel";
 const RoomieRequest = require('../models/roomieRequestModel')
 const UserMatchData = require("../models/userMatchDataModel")
 const { google } = require("googleapis");
@@ -12,12 +16,12 @@ const NodeMailer = require("../utils/nodeMailer");
 /**
  * @route /oauth/
  */
-const login = async (req, res) => {
+const login = async (req: Request, res: Response) => {
   let oauthCode = req.query["code"]; // query oauth code
   // get token
   oAuth
-    .getToken(oauthCode)
-    .then(async (googleRes) => {
+    .getToken(oauthCode as string)
+    .then(async (googleRes : GetTokenResponse) => {
       // now get their access token
       let token = googleRes.tokens.access_token;
 
@@ -31,7 +35,7 @@ const login = async (req, res) => {
       const userInfo = (await oauth2.userinfo.get()).data;
 
       // now first check if this user already exists before creating a new account
-      let user = await User.findOne({
+      let user = await UserModel.findOne({
         openid: userInfo.id,
         email: userInfo.email,
       });
@@ -39,7 +43,7 @@ const login = async (req, res) => {
       // if user doesn't exist, create them
       if (user === undefined || user === null) {
         // add the user to the db because they dont exist
-        await User.create({
+        await UserModel.create({
           openid: userInfo.id,
           name: {
             firstName: userInfo.given_name,
@@ -71,7 +75,7 @@ const login = async (req, res) => {
       // redirect the user back to the main page
       res.redirect("http://localhost:3000/"); //todo: make abstract url
     })
-    .catch((err) => {
+    .catch((err : Error) => {
       console.log(err);
       res.status(400).json({
         error: "Invalid OAuth code",
@@ -79,14 +83,14 @@ const login = async (req, res) => {
     });
 };
 
-const deleteUser = async (req, res, user) => {
+const deleteUser = async (req : Request, res: Response, user: User) => {
   //todo delete user
     // todo also delete match rating
 };
 
-const updateUser = async (req, res, user) => {
-  user.updateOne(req.body).then((resp) => {
-    User.findOne({
+const updateUser = async (req : Request, res: Response, user: User) => {
+  UserModel.updateOne(req.body).then((resp) => {
+    UserModel.findOne({
       openid: user.openid,
       email: user.email,
     }).then((user) => {
@@ -96,15 +100,16 @@ const updateUser = async (req, res, user) => {
 
   // now on the backend also update database match ratings
   // for everyone the same gender
-  User.find({gender: user.gender}).then(users => {
-    RoomieRequest.find({authorId: user.openid}).then(roomieReq => {
-      for (let aUser in users) {
+  /* todo: this is a mess and needs to be recoded
+  UserModel.find({gender: user.gender}).then(users => {
+    RoomieRequestModel.find({authorId: user.openid}).then(roomieReqs => {
+      for (let roomieReq of roomieReqs) {
         // user -> aUser
         UserMatchData.findByIdAndUpdate({
           from: user.openid,
           to: aUser.openid
         }, {
-          matchRating: MatchCalculator.calcMatch(user, aUser, user.preferences)
+          matchRating: MatchCalculator.calcMatch(user, aUser, roomieReq.preferences)
         }, {
           upsert: true
         })
@@ -125,13 +130,15 @@ const updateUser = async (req, res, user) => {
     }
   },)
 
+   */
+
 };
 
-const myInfo = async (req, res, user) => {
+const myInfo = async (req : Request, res: Response, user: User) => {
   res.json(user);
 };
 
-const getUser = async (req, res, user) => {
+const getUser = async (req : Request, res: Response, user: User) => {
   let userid = req.query["userid"];
   let variables = {
     userid: userid,
@@ -146,14 +153,14 @@ const getUser = async (req, res, user) => {
       return;
     }
   }
-  User.findOne({
+  UserModel.findOne({
     openid: userid,
   }).then((user) => {
     res.json(user);
   });
 };
 
-const getUsers = async (req, res, user) => {
+const getUsers = async (req : Request, res: Response, user: User) => {
   let userids = req.body["userids"];
   let variables = {
     userids: userids,
@@ -169,11 +176,11 @@ const getUsers = async (req, res, user) => {
     }
   }
 
-  let users = []
+  let users : User[] = []
 
   for (let userid of userids) {
-    let user = await User.findOne({ openid: userid });
-    users.push(user);
+    let user = await UserModel.findOne({ openid: userid });
+    users.push(user as User);
   }
 
   res.json(users);

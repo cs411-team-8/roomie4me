@@ -22,7 +22,6 @@ function Dashboard(props) {
   const handleCard2 = async () => {
     if (document.cookie) {
       const accessToken = document.cookie.split("access-token=")[1];
-      const baseUrl = process.env.REACT_APP_BACKEND_URL;
       const endpoint = "/api/v1/roomie/requests";
 
       const queryParams = new URLSearchParams();
@@ -30,7 +29,7 @@ function Dashboard(props) {
       queryParams.append("batch-size", 25);
       queryParams.append("sort-mode", "creation");
 
-      const url = baseUrl + endpoint + "?" + queryParams.toString();
+      const url = endpoint + "?" + queryParams.toString();
 
       const options = {
         method: "GET",

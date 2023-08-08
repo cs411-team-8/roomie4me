@@ -1,4 +1,4 @@
-let User = require("../models/userModel");
+import {User, UserModel} from '../models/userModel'
 
 /**
  *
@@ -19,7 +19,7 @@ let User = require("../models/userModel");
  * wn/total weight=percent the nth weight counts from 0-1
  * @returns {number}
  */
-function calcMatch(user1, user2, preferences) {
+function calcMatch(user1 : User, user2 : User, preferences : any) {
   // each category is worth up to 10 points
 
   /*
@@ -54,10 +54,10 @@ function calcMatch(user1, user2, preferences) {
 /**
  * @param date {Date}
  */
-function getAge(date) {
-  let birthdate = new Date("1990/1/1");
+function getAge(date : Date) {
+  let birthdate = new Date(date);
   let cur = new Date();
-  let diff = cur - birthdate; // This is the difference in milliseconds
+  let diff = cur.getDate() - birthdate.getDate(); // This is the difference in milliseconds
   let age = diff / 31557600000; // Divide by 1000*60*60*24*365.25
   return age;
 }
@@ -68,7 +68,7 @@ function getAge(date) {
  * @param range an optional parameter only valid for number types to specify how far value and target can be
  * @returns {Number} from 0-1 were 0 means completely different and 1 means perfect match
  */
-function getSimilarity(value, compareTo, range) {
+function getSimilarity(value : any, compareTo : any, range : number) {
   if (value instanceof Array) {
     // count matches
     let common = countCommonElements(value, compareTo);
@@ -80,19 +80,22 @@ function getSimilarity(value, compareTo, range) {
     // compare distance based on range if value==compareTo ret 1
     // if abs(value-compareTo) - range > 0 ret 0
     // else ret abs(value-compareTo) / range
-    if (value === compareTo) {
+    let numericValue = value as number;
+    let comparedValue = compareTo as number;
+
+    if (numericValue === compareTo) {
       return 1;
-    } else if (Math.abs(value - compareTo) - range > 0) {
+    } else if (Math.abs(numericValue - comparedValue) - range > 0) {
       return 0;
     } else {
-      return Math.abs(value - compareTo) / range;
+      return Math.abs(numericValue - comparedValue) / range;
     }
   } else {
     throw "Unsupported type";
   }
 }
 
-function countCommonElements(array1, array2) {
+function countCommonElements(array1 : Array<any>, array2 : Array<any>) {
   let count = 0;
   for (let i = 0; i < array1.length; i++) {
     if (array2.includes(array1[i])) {
@@ -102,7 +105,7 @@ function countCommonElements(array1, array2) {
   return count;
 }
 
-function getWeights(scale) {
+function getWeights(scale : Number) : Number {
   if (scale === 1) {
     return 0.0;
   } else if (scale === 2) {
@@ -113,6 +116,8 @@ function getWeights(scale) {
     return 0.7;
   } else if (scale === 5) {
     return 1;
+  } else {
+    throw new Error('Invalid weight');
   }
 }
 

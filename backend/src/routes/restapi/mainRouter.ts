@@ -1,4 +1,4 @@
-const express = require('express')
+import express from "express";
 const usersRouter = require('./userRouter')
 const roomieRouter = require('./roomieRouter')
 const inviteRouter = require('./invitesRouter')
