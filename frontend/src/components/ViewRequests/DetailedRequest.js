@@ -13,7 +13,6 @@ function DetailedRequest() {
     const test = async () => {
       if (document.cookie) {
         const accessToken = document.cookie.split("access-token=")[1];
-        const baseUrl = process.env.REACT_APP_BACKEND_URL;
         const requestEndpoint = "/api/v1/roomie/request";
         const decodedString = decodeURIComponent(
           window.location.pathname.split("/request/")[1]
@@ -25,8 +24,7 @@ function DetailedRequest() {
         requestQueryParams.append("authorId", authorId);
         requestQueryParams.append("targetSemester", semester);
 
-        const requestUrl =
-          baseUrl + requestEndpoint + "?" + requestQueryParams.toString();
+        const requestUrl = requestEndpoint + "?" + requestQueryParams.toString();
 
         const requestOptions = {
           method: "GET",
@@ -46,8 +44,7 @@ function DetailedRequest() {
         const userQueryParams = new URLSearchParams();
         userQueryParams.append("userid", authorId);
 
-        const userUrl =
-          baseUrl + userEndpoint + "?" + userQueryParams.toString();
+        const userUrl = userEndpoint + "?" + userQueryParams.toString();
 
         const userOptions = {
           method: "GET",
@@ -86,7 +83,7 @@ function DetailedRequest() {
     console.log(user.openid);
     console.log("hi");
     event.preventDefault();
-    const url = process.env.REACT_APP_BACKEND_URL + "/api/v1/invite/send";
+    const url = "/api/v1/invite/send";
     const accessToken = document.cookie.split("access-token=")[1];
     const message = document.querySelector(".message").value;
 

@@ -32,7 +32,6 @@ function ViewRequests(props) {
       try {
         if (document.cookie) {
           const accessToken = document.cookie.split("access-token=")[1];
-          const baseUrl = process.env.REACT_APP_BACKEND_URL;
           const requestEndpoint = "/api/v1/roomie/requests";
 
           const requestQueryParams = new URLSearchParams();
@@ -40,8 +39,7 @@ function ViewRequests(props) {
           requestQueryParams.append("batch-size", 25);
           requestQueryParams.append("sort-mode", "creation");
 
-          const requestUrl =
-            baseUrl + requestEndpoint + "?" + requestQueryParams.toString();
+          const requestUrl = requestEndpoint + "?" + requestQueryParams.toString();
 
           const requestOptions = {
             method: "GET",
@@ -57,7 +55,7 @@ function ViewRequests(props) {
           setRequests(requestData);
 
           const userEndpoint = "/api/v1/user/findall";
-          const userUrl = baseUrl + userEndpoint;
+          const userUrl = userEndpoint;
           const userOptions = {
             method: "POST",
             headers: {

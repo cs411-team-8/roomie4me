@@ -26,7 +26,7 @@ function CreateRequest(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = process.env.REACT_APP_BACKEND_URL + "/api/v1/roomie/create";
+    const url = "/api/v1/roomie/create";
     const accessToken = document.cookie.split("access-token=")[1];
     const semester = document.querySelector(".semester").value;
     const numRoomies = document.querySelector(".numRoomies").value;
