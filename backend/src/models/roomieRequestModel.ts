@@ -1,4 +1,5 @@
-import { prop, getModelForClass, index } from '@typegoose/typegoose';
+import {prop, getModelForClass, index, modelOptions} from '@typegoose/typegoose';
+import {Severity} from "@typegoose/typegoose/lib/internal/constants";
 enum RequestStatus {
   OPEN,
   PENDING,
@@ -6,6 +7,7 @@ enum RequestStatus {
   EXPIRED
 }
 @index({ authorId: 1, targetSemester: 1 }, { unique: true })
+@modelOptions({ options: { allowMixed: Severity.ALLOW} })
 class RoomieRequest {
   @prop({ required: true })
   public authorId!: number;

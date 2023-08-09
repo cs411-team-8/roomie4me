@@ -1,4 +1,6 @@
-import { prop, getModelForClass } from '@typegoose/typegoose';
+import {prop, getModelForClass, modelOptions} from '@typegoose/typegoose';
+import {warnMixed} from "@typegoose/typegoose/lib/internal/utils";
+import {Severity} from "@typegoose/typegoose/lib/internal/constants";
 
 enum HabitFrequency {
     OFTEN,
@@ -7,6 +9,7 @@ enum HabitFrequency {
     NEVER
 }
 
+@modelOptions({ options: { allowMixed: Severity.ALLOW} })
 class User {
     @prop({ required: true, unique: true })
     public openid!: number;
